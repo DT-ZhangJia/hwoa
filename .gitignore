@@ -1,0 +1,3 @@
+config.py
+.pylintrc
+__pycache__
