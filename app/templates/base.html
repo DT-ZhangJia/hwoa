@@ -1,6 +1,6 @@
 {% extends "bootstrap/base.html" %}
 
-{% block title %}Flasky{% endblock %}
+{% block title %}Huiwen OA{% endblock %}
 
 {% block head %}
 {{ super() }}
@@ -18,20 +18,24 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Flasky</a>
+            <a class="navbar-brand" href="/">Huiwen OA</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="/">首页</a></li>
                 {% if current_user.is_authenticated %}
                 <li><a href="/ulist">用户列表</a></li>
-                <li><a href="/auth/changepassword">修改密码</a></li>
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.is_authenticated %}
-                <li><a href="/">用户：{{current_user.username}}</a></li>
-                <li><a href="{{ url_for('auth.logout') }}">注销</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{current_user.username}} <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('auth.change_passwd') }}">修改密码</a></li>
+                        <li><a href="{{ url_for('auth.logout') }}">注销</a></li>
+                    </ul>
+                </li>
                 {% else %}
                 <li><a href="{{ url_for('auth.login') }}">登录</a></li>
                 {% endif %}
