@@ -48,5 +48,8 @@ def create_app(config_name):
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
     #将登录类蓝本注册到app，并分配url前缀
 
+    from .work import work as work_blueprint
+    app.register_blueprint(work_blueprint, url_prefix='/work')
+    #将登录类蓝本注册到app，并分配url前缀
 
     return app

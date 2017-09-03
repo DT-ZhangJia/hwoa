@@ -11,12 +11,41 @@ from flask import current_app
 from flask_login import UserMixin
 from . import mydb, login_manager
 
+
+
 class Permission:
+    """Permissions"""
     FOLLOW = 0x01
     COMMENT = 0x02
     WRITE_ARTICLES = 0x04
     MODERATE_COMMENTS = 0x08
     ADMINISTER = 0x80
+
+class Payments(mydb.Model):
+    """Payments"""
+    __tablename__ = 'payments'
+    idpayment = mydb.Column(mydb.Integer, primary_key=True)
+    applieruid = mydb.Column(mydb.Integer, mydb.ForeignKey('users.uid'))
+    applytime = mydb.Column(mydb.DateTime)
+    dpt = mydb.Column(mydb.String(64))
+    budgettype = mydb.Column(mydb.String(64))
+    content = mydb.Column(mydb.Text)
+    amount = mydb.Column(mydb.Float)
+    approveruid = mydb.Column(mydb.Integer, mydb.ForeignKey('users.uid'))
+    opinion = mydb.Column(mydb.Boolean)
+
+    def __repr__(self):
+        return '<Payment %r>' % self.name
+
+class Approvers(mydb.Model):
+    """Approvers"""
+    __tablename__ = 'approvers'
+    idapprover = mydb.Column(mydb.Integer, primary_key=True)
+    dpt = mydb.Column(mydb.String(64))
+    approveruid = mydb.Column(mydb.Integer)
+
+    def __repr__(self):
+        return '<Approver %r>' % self.name
 
 class Role(mydb.Model):
     """role"""
@@ -36,18 +65,21 @@ class User(UserMixin, mydb.Model):
     uid = mydb.Column(mydb.Integer, primary_key=True)
     #id = uid #如果不手动设置这个id的参数，则get_id方法就报错，奇怪！
     username = mydb.Column(mydb.String(64), unique=True, index=True)
+    name = mydb.Column(mydb.String(64))
     email = mydb.Column(mydb.String(64), unique=True, index=True)
     passwd_hash = mydb.Column(mydb.String(128))
     role_id = mydb.Column(mydb.Integer, mydb.ForeignKey('roles.uid'))
-    confirmed = mydb.Column(mydb.Boolean, default=False)
+    dpt = mydb.Column(mydb.String(64))
+    title = mydb.Column(mydb.String(64))
+    confirmed = mydb.Column(mydb.Boolean, default=True)#临时全激活注册用户
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
         if self.role is None:
             #if self.email == current_app.config['FLASKY_ADMIN']:
             #    self.role = Role.query.filter_by(permissions=0xff).first()
-            if self.role is None:
-                self.role = Role.query.filter_by(default=True).first()
+            #if self.role is None:
+            self.role = Role.query.filter_by(default=True).first()
 
     @property
     def passwd(self):

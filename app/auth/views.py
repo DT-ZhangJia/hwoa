@@ -47,10 +47,11 @@ def register():
                        passwd=registerform_app.passwd_reg_input.data)
         mydb.session.add(newuser)# pylint: disable=no-member
         mydb.session.commit()# pylint: disable=no-member 需要立刻提交数据库以获得id
-        token = newuser.generate_confirmation_token()
-        send_email(newuser.email, 'Confirm Your Account',
-                   'auth/email/confirm', mailuser=newuser, token=token)
-        flash('A confirmation email sent.')
+        #临时取消邮件确认
+        #token = newuser.generate_confirmation_token()
+        #send_email(newuser.email, 'Confirm Your Account',
+        #           'auth/email/confirm', mailuser=newuser, token=token)
+        #flash('A confirmation email sent.')
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html', registerform_display=registerform_app)
 

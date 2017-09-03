@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Huiwen OA - 申请付款{% endblock %}
+
+
+
+{% block page_content %}
+<div class="page-header">
+    <h1>申请付款</h1>
+</div>
+<div class="col-md-4">
+    {{ wtf.quick_form(payapplyform_display) }}
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+    var all_approvers_dict = {{ all_approvers_dict|safe }};
+    $("select[name='dpt_apply_input']").change(function(){
+        var dpt_select = $("select[name='dpt_apply_input']").val();
+        var approver = all_approvers_dict[dpt_select];
+        $("input[name='approveruid_apply_input']").val(approver);
+    });
+</script>
+{% endblock %}
