@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Huiwen OA - 申请详情{% endblock %}
+
+{% block page_content %}
+    <div class="page-header"> 
+    <h1>付款申请单</h1>
+    </div>
+    <div class="col-md-4">
+        {{ wtf.quick_form(paydetail_disp) }}
+    </div>
+{% endblock %}

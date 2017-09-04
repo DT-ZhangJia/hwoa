@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Huiwen OA - 审批列表{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div>
+        <table class="table table-striped">
+            <tread><tr><th>申请时间</th><th>内容</th><th style="text-align:right;">金额</th><th>申请人</th><th>审批</th></tr></tread>
+            <tbody>
+            {% for pay in approvelist %}
+                <tr>
+                    <td ><div style='white-space:nowrap'> {{pay.applytime}} </div></td>
+                    <td><div style="border:none;  max-width:250px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap"> {{pay.content.decode()}} </div></td>
+                    <td min-width=200px nowrap style="text-align:right;"> {{pay.amount}} </td>
+                    <td min-width=80px nowrap> {{all_users_dict[pay.applieruid]}} </td>
+                    <td min-width=80px nowrap>
+                        {% if pay.opinion is none %}
+                        <a href="{{ url_for('work.paydetail', pid=pay.idpayment, _external=True) }}">未审批</a>
+                        {% elif pay.opinion == 1 %} <div style="border:none; color:#008200;">已审批</div> 
+                        {% elif pay.opinion == 0 %} <div style="border:none; color:#c00;">已拒绝</div> 
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

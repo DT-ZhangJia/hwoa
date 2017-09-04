@@ -1,15 +1,20 @@
 {% extends "base.html" %}
 
-{% block title %}Huiwen OA - 用户列表{% endblock %}
+{% block title %}Huiwen OA - 付款清单{% endblock %}
 
 {% block content %}
 <div class="container">
     <div>
         <table class="table table-striped">
-            <tread><tr><th>申请人</th><th>申请时间</th><th>内容</th><th style="text-align:right;">金额</th></tr></tread>
+            <tread><tr><th>申请时间</th><th>内容</th><th style="text-align:right;">金额</th><th>申请人</th></tr></tread>
             <tbody>
             {% for pay in paylist %}
-                <tr><td min-width=80px nowrap> {{pay.applieruid}} </td><td min-width=150px nowrap> {{pay.applytime}} </td><td> {{pay.content.decode()}} </td><td min-width=200px nowrap style="text-align:right;"> {{pay.amount}} </td></tr>
+                <tr>
+                    <td min-width=150px nowrap> {{pay.applytime}} </td>
+                    <td><div style="border:none; width:250px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap"> {{pay.content.decode()}} </div></td>
+                    <td min-width=200px nowrap style="text-align:right;"> {{pay.amount}} </td>
+                    <td min-width=80px nowrap> {{all_users_dict[pay.applieruid]}} </td>
+                </tr>
             {% endfor %}
             </tbody>
         </table>
