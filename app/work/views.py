@@ -6,7 +6,7 @@ from flask import render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 from flask_moment import Moment
 from datetime import datetime
-from pytz import pytz
+import pytz
 from .. import mydb
 from .forms import PayapplyForm, Paydetail
 from . import work
