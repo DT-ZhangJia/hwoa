@@ -6,11 +6,11 @@ from flask import render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 from flask_moment import Moment
 from datetime import datetime
+from pytz import pytz
 from .. import mydb
 from .forms import PayapplyForm, Paydetail
 from . import work
 from ..models import Payments, Approvers, User
-
 
 
 @work.route('/payment')
@@ -103,8 +103,12 @@ def payapply():
     if payapplyform_app.validate_on_submit():
         #先定位dpt对应id
         approver_selected = Approvers.query.filter_by(idapprover=payapplyform_app.dpt_apply_input.data).first()
+        #调整时区
+        pytz.country_timezones('cn')
+        tz = pytz.timezone('Asia/Shanghai')
+
         newpayment = Payments(applieruid=current_user.uid,
-                              applytime=datetime.now(),
+                              applytime=datetime.now(tz),
                               dpt=payapplyform_app.dpt_apply_input.data,
                               budgettype=payapplyform_app.budgettype_apply_input.data,
                               content=payapplyform_app.content_apply_input.data,
