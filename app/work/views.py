@@ -75,6 +75,10 @@ def paydetail(pid):
             paydetail_query.opinion = True
         elif paydetail_app.opinion.data =="0":
             paydetail_query.opinion = False
+        
+        pytz.country_timezones('cn')
+        tz = pytz.timezone('Asia/Shanghai')
+        paydetail_query.approvetime = datetime.now(tz)
         mydb.session.add(paydetail_query)# pylint: disable=no-member
         mydb.session.commit()# pylint: disable=no-member 需要立刻提交数据库以获得id
         return redirect(url_for('work.approvelist'))

@@ -33,6 +33,7 @@ class Payments(mydb.Model):
     amount = mydb.Column(mydb.Float)
     approveruid = mydb.Column(mydb.Integer, mydb.ForeignKey('users.uid'))
     opinion = mydb.Column(mydb.Boolean)
+    approvetime = mydb.Column(mydb.DateTime)
 
     def __repr__(self):
         return '<Payment %r>' % self.name
