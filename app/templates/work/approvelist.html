@@ -11,7 +11,7 @@
             {% for pay in approvelist %}
                 <tr>
                     <td ><div style='white-space:nowrap'> {{pay.applytime}} </div></td>
-                    <td><div style="border:none;  max-width:250px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap"> {{pay.content.decode()}} </div></td>
+                    <td><div style="border:none;  max-width:250px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap"> {{pay.content}} </div></td>
                     <td min-width=200px nowrap style="text-align:right;"> {{pay.amount}} </td>
                     <td min-width=80px nowrap> {{all_users_dict[pay.applieruid]}} </td>
                     <td min-width=80px nowrap>

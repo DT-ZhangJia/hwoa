@@ -29,7 +29,7 @@ class Payments(mydb.Model):
     applytime = mydb.Column(mydb.DateTime)
     dpt = mydb.Column(mydb.String(64))
     budgettype = mydb.Column(mydb.String(64))
-    content = mydb.Column(mydb.Text)
+    content = mydb.Column(mydb.String(1024))
     amount = mydb.Column(mydb.Float)
     approveruid = mydb.Column(mydb.Integer, mydb.ForeignKey('users.uid'))
     opinion = mydb.Column(mydb.Boolean)

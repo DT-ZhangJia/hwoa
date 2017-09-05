@@ -67,7 +67,7 @@ def paydetail(pid):
     paydetail_app.dpt_view.data = department.dpt
     paydetail_app.budgettype_view.data = paydetail_query.budgettype
     paydetail_app.amount_view.data = paydetail_query.amount
-    paydetail_app.content_view.data = paydetail_query.content.decode()
+    paydetail_app.content_view.data = paydetail_query.content
 
     #提交审批 出问题了 不是更新 而是新增了
     if paydetail_app.validate_on_submit():
