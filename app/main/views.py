@@ -49,6 +49,10 @@ def index():
     """index view"""
     return render_template('index.html')
 
+@main.route('/hcj')
+def hcj():
+    """html css js view"""
+    return render_template('hcj.html')
 
 @main.route('/ulist')
 @login_required

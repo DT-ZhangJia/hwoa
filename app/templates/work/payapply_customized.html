@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Huiwen OA - 申请付款{% endblock %}
+
+
+
+{% block page_content %}
+<div class="page-header">
+    <h1>申请付款</h1>
+</div>
+
+<div class="col-md-4">
+    <form action="" method="post" class="form" role="form" onsubmit="return getContent()">
+        {{ payapplyform_display.hidden_tag() }}
+        <div class="form-group  required">
+            {{ payapplyform_display.dpt_apply_input.label(class="control-label") }}
+            {{ payapplyform_display.dpt_apply_input(class="form-control", id="dpt_apply_input")}}
+        </div>
+
+        <div class="form-group  required">
+            {{ payapplyform_display.budgettype_apply_input.label(class="control-label") }}
+            {{ payapplyform_display.budgettype_apply_input(class="form-control", id="budgettype_apply_input")}}
+        </div>
+
+        <div class="form-group  required">
+            {{ payapplyform_display.content_apply_input.label(class="control-label") }}
+            <div class="form-control" style="height:auto" contenteditable="true" id="content_apply_div"></div>
+        </div>
+
+
+
+
+
+        <div class="form-group  required">
+            {{ payapplyform_display.amount_apply_input.label(class="control-label") }}
+            {{ payapplyform_display.amount_apply_input(class="form-control", id="amount_apply_input")}}
+        </div>
+
+
+        {%- for fieldname, errors in payapplyform_display.errors.items() %}
+        {%- for error in errors %}
+          <p class="error" style="color:red">{{error}}</p>
+        {%- endfor %}
+        {%- endfor %}
+
+
+        <div class="form-group  required">
+            {{ payapplyform_display.approveruid_apply_input.label(class="control-label") }}
+            {{ payapplyform_display.approveruid_apply_input(class="form-control", id="approveruid_apply_input")}}
+        </div>
+
+        <textarea id="content_apply_input" name="content_apply_input" style="display:none"></textarea>
+
+        {{ payapplyform_display.submit_pay_btn(class="btn btn-default", id="submit_pay_btn") }}
+
+    </form>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+    var all_approvers_dict = {{ all_approvers_dict|safe }};
+    $("select[name='dpt_apply_input']").change(function(){
+        var dpt_select = $("select[name='dpt_apply_input']").val();
+        var approver = all_approvers_dict[dpt_select];
+        $("input[name='approveruid_apply_input']").val(approver);
+    });
+
+    function getContent(){
+        document.getElementById("content_apply_input").value = document.getElementById("content_apply_div").innerHTML;
+    }
+</script>
+{% endblock %}
