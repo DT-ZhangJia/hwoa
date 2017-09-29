@@ -1,5 +1,5 @@
 """
-learn flask work views
+业务视图模块
 """
 # pylint: disable=invalid-name, too-few-public-methods
 from flask import render_template, redirect, url_for, flash
@@ -8,9 +8,11 @@ from flask_moment import Moment
 from datetime import datetime
 import pytz
 from .. import mydb
-from .forms import PayapplyForm, Paydetail
+from .forms import LabelDict, PayapplyForm, Paydetail, AddPermissionForm, Permissiondetail, ContractForm
 from . import work
-from ..models import Payments, Approvers, User
+from ..models import Payments, Approvers, User, Permissions, Departments
+from sqlalchemy import and_
+
 
 
 @work.route('/payment')
@@ -18,14 +20,9 @@ from ..models import Payments, Approvers, User
 def payment():
     """payment page"""
     all_payments = Payments.query.order_by(Payments.applytime.desc()).all()
+    label_dict = LabelDict()
 
-    #准备全员姓名传入视图页面
-    all_users = User.query.all()
-    all_users_dict = {}
-    for user in all_users:
-        all_users_dict[user.uid] = user.name
-
-    return render_template('work/payment.html', paylist=all_payments, all_users_dict=all_users_dict)
+    return render_template('work/payment.html', paylist=all_payments, all_users_dict=label_dict.all_users_dict)
 
 
 @work.route('/approvelist')
@@ -33,15 +30,9 @@ def payment():
 def approvelist():
     """待审批列表"""
     all_approves = Payments.query.order_by(Payments.applytime.desc()).filter_by(approveruid=current_user.uid)
-    #准备全员姓名传入视图页面
-    all_users = User.query.all()
-    all_users_dict = {}
-    for user in all_users:
-        all_users_dict[user.uid] = user.name
+    label_dict = LabelDict()
 
-    return render_template('work/approvelist.html', 
-                           approvelist=all_approves, 
-                           all_users_dict=all_users_dict)
+    return render_template('work/approvelist.html', approvelist=all_approves, all_users_dict=label_dict.all_users_dict)
 
 
 @work.route('/paydetail/<pid>', methods=['GET', 'POST'])
@@ -125,3 +116,14 @@ def payapply():
     #视图函数传入页面
     return render_template('work/payapply.html', payapplyform_display=payapplyform_app, all_approvers_dict=all_approvers_dict)
 
+
+
+
+@work.route('/contractapply', methods=['GET', 'POST'])
+@login_required
+def contractapply():
+    """contractapply apply"""
+
+    #表单实例
+    contractapply_app = ContractForm()
+    pass

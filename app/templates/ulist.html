@@ -6,10 +6,10 @@
 <div class="container">
     <div>
         <table class="table table-striped">
-            <tread><tr><th>用户名</th><th>部门</th><th>职位</th><th>email</th></tr></tread>
+            <tread><tr><th>用户名</th><th>姓名</th><th>email</th></tr></tread>
             <tbody>
             {% for user in userlist %}
-                <tr><td> {{user.username}} </td><td> {{user.dpt}} </td><td> {{user.title}} </td><td> {{user.email}} </td></tr>
+                <tr><td> {{user.username}} </td><td> {{user.name}} </td><td> {{user.email}} </td></tr>
             {% endfor %}
             </tbody>
         </table>

@@ -12,14 +12,15 @@ from flask_login import UserMixin
 from . import mydb, login_manager
 
 
+class Departments(mydb.Model):
+    """Departments"""
+    __tablename__ = 'departments'
+    iddepartments = mydb.Column(mydb.Integer, primary_key=True)
+    dptname = mydb.Column(mydb.String(64))
 
-class Permission:
-    """Permissions"""
-    FOLLOW = 0x01
-    COMMENT = 0x02
-    WRITE_ARTICLES = 0x04
-    MODERATE_COMMENTS = 0x08
-    ADMINISTER = 0x80
+    def __repr__(self):
+        return '<Department %r>' % self.name
+
 
 class Payments(mydb.Model):
     """Payments"""
@@ -48,6 +49,124 @@ class Approvers(mydb.Model):
     def __repr__(self):
         return '<Approver %r>' % self.name
 
+
+class Permissions(mydb.Model):
+    """权限表"""
+    __tablename__ = 'permissions'
+    idpermission = mydb.Column(mydb.Integer, primary_key=True)
+    companyid = mydb.Column(mydb.Integer)
+    positionid = mydb.Column(mydb.Integer)
+    puid = mydb.Column(mydb.Integer)
+    term = mydb.Column(mydb.Integer)
+    termstart = mydb.Column(mydb.DateTime)
+    termend = mydb.Column(mydb.DateTime)
+    approved = mydb.Column(mydb.Boolean)
+    apprv100001 = mydb.Column(mydb.Float)
+    apprv100002 = mydb.Column(mydb.Float)
+    apprv100003 = mydb.Column(mydb.Float)
+    apprv100004 = mydb.Column(mydb.Float)
+    apprv100005 = mydb.Column(mydb.Float)
+    apprv100006 = mydb.Column(mydb.Float)
+    apprv100007 = mydb.Column(mydb.Float)
+    apprv100008 = mydb.Column(mydb.Float)
+    apprv100009 = mydb.Column(mydb.Float)
+    apprv100010 = mydb.Column(mydb.Float)
+    apprv100011 = mydb.Column(mydb.Float)
+    apprv100012 = mydb.Column(mydb.Float)
+    apprv100013 = mydb.Column(mydb.Float)
+    apprv100014 = mydb.Column(mydb.Float)
+    apprv100015 = mydb.Column(mydb.Float)
+    apprv100016 = mydb.Column(mydb.Float)
+    apprv100017 = mydb.Column(mydb.Float)
+
+    def __repr__(self):
+        return '<Permissions %r>' % self.name
+
+
+class Operations(mydb.Model):
+    """业务类型"""
+    __tablename__ = 'operations'
+    idoperations = mydb.Column(mydb.Integer, primary_key=True)
+    opcode = mydb.Column(mydb.String(32))
+    opname = mydb.Column(mydb.String(64))
+    opapprvcode = mydb.Column(mydb.String(32))
+    opapprvname = mydb.Column(mydb.String(64))
+
+    def __repr__(self):
+        return '<Operations %r>' % self.name
+
+
+
+class Lawyers(mydb.Model):
+    """法务财务复核"""
+    __tablename__ = 'lawyers'
+    idlawyer = mydb.Column(mydb.Integer, primary_key=True)
+    companyid = mydb.Column(mydb.Integer)
+    consultant = mydb.Column(mydb.Integer)
+    consultantuid = mydb.Column(mydb.Integer)
+
+    def __repr__(self):
+        return '<Lawyers %r>' % self.name
+
+
+class Crossvalids(mydb.Model):
+    """交叉复核"""
+    __tablename__ = 'crossvalids'
+    idcrossvalids = mydb.Column(mydb.Integer, primary_key=True)
+    companyid = mydb.Column(mydb.Integer)
+    crossdpt = mydb.Column(mydb.Integer)
+    crossuid = mydb.Column(mydb.Integer)
+
+    def __repr__(self):
+        return '<Crossvalids %r>' % self.name
+
+
+
+class Contracts(mydb.Model):
+    """合同审批流程"""
+    __tablename__ = 'contracts'
+    idcontracts = mydb.Column(mydb.Integer, primary_key=True)
+    companyid = mydb.Column(mydb.Integer)
+    applieruid = mydb.Column(mydb.Integer)
+    applydpt = mydb.Column(mydb.Integer)
+    applytime = mydb.Column(mydb.DateTime)
+    opcode = mydb.Column(mydb.String(32))
+    content = mydb.Column(mydb.String(5120))
+    amount = mydb.Column(mydb.Float)
+    procedure = mydb.Column(mydb.Integer) #这个字段是重点
+    preprocess = mydb.Column(mydb.Boolean)
+    crossdpt = mydb.Column(mydb.Integer)
+    crossuid = mydb.Column(mydb.Integer)
+    crossopinion = mydb.Column(mydb.Boolean) #假设True是无异议
+    crosscontent = mydb.Column(mydb.String(2048))
+    crosstime = mydb.Column(mydb.DateTime)
+    lawyeruid = mydb.Column(mydb.Integer)
+    lawyeropinion = mydb.Column(mydb.Boolean) #假设True是无异议
+    lawyercontent = mydb.Column(mydb.String(2048))
+    lawyertime = mydb.Column(mydb.DateTime)
+    accuid = mydb.Column(mydb.Integer)
+    accopinion = mydb.Column(mydb.Boolean) #假设True是无异议
+    acccontent = mydb.Column(mydb.String(2048))
+    acctime = mydb.Column(mydb.DateTime)
+    authid = mydb.Column(mydb.Integer)
+    approveruid = mydb.Column(mydb.Integer)
+    apprvopinion = mydb.Column(mydb.Boolean)
+    apprvtime = mydb.Column(mydb.DateTime)
+    lv2approveruid = mydb.Column(mydb.Integer)
+    lv2apprvopinion = mydb.Column(mydb.Boolean)
+    lv2apprvtime = mydb.Column(mydb.DateTime)
+    stamperuid = mydb.Column(mydb.Integer)
+    stamptime = mydb.Column(mydb.DateTime)
+    originalcontractid = mydb.Column(mydb.Integer)
+    stopcontractid = mydb.Column(mydb.Integer)
+    updatecontractid = mydb.Column(mydb.Integer)
+
+
+    def __repr__(self):
+        return '<Contracts %r>' % self.name
+
+
+
 class Role(mydb.Model):
     """role"""
     __tablename__ = 'roles'
@@ -70,13 +189,14 @@ class User(UserMixin, mydb.Model):
     email = mydb.Column(mydb.String(64), unique=True, index=True)
     passwd_hash = mydb.Column(mydb.String(128))
     role_id = mydb.Column(mydb.Integer, mydb.ForeignKey('roles.uid'))
-    dpt = mydb.Column(mydb.String(64))
+    company = mydb.Column(mydb.Integer)
+    dpt = mydb.Column(mydb.Integer)
     title = mydb.Column(mydb.String(64))
     confirmed = mydb.Column(mydb.Boolean, default=True)#临时全激活注册用户
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
-        if self.role is None:
+        if self.role is None: # pylint: disable=E0203
             #if self.email == current_app.config['FLASKY_ADMIN']:
             #    self.role = Role.query.filter_by(permissions=0xff).first()
             #if self.role is None:

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Huiwen OA - 新增授权{% endblock %}
+
+
+
+{% block page_content %}
+
+<div class="page-header">
+    <h1>新增授权</h1>
+</div>
+
+<div class="col-md-4">
+    {{ wtf.quick_form(addpermissionform_display) }}
+    <div style="height:30px">debug: {{ addnewpower }} {{ apprv100001_data }}</div>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+    var selectoption_dict = {{ selectoption_dict|safe }};
+
+    $("select[name='usercompany_addpm_input']").change(function(){
+        var companyid = $("select[name='usercompany_addpm_input']").val();
+        var dptid = $("select[name='userdpt_addpm_input']").val();
+        var useroptions = selectoption_dict[companyid][dptid]
+        $("select[name='user_addpm_input']").empty();
+        $("select[name='user_addpm_input']").append("<option value=''>---</option>"); 
+        $("select[name='user_addpm_input']").append(useroptions);      
+    });
+
+    $("select[name='userdpt_addpm_input']").change(function(){
+        var companyid = $("select[name='usercompany_addpm_input']").val();
+        var dptid = $("select[name='userdpt_addpm_input']").val();
+        var useroptions = selectoption_dict[companyid][dptid]
+        $("select[name='user_addpm_input']").empty();
+        $("select[name='user_addpm_input']").append("<option value=''>---</option>"); 
+        $("select[name='user_addpm_input']").append(useroptions);
+    });
+
+</script>
+{% endblock %}
