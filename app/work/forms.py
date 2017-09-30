@@ -22,9 +22,11 @@ class LabelDict():
             self.all_users_dict[user.uid] = user.name
 
         self.all_dpt_dict = {} #部门id名称字典
+        self.all_dptincharge_dict = {} #部门长名称字典
         all_dpt = Departments.query.all()
         for dpt in all_dpt:
             self.all_dpt_dict[dpt.iddepartments] = dpt.dptname
+            self.all_dptincharge_dict[dpt.iddepartments] = dpt.dptincharge
 
         self.all_company_dict = {1:'辉文',2:'植森',3:'蓓蒂森'} #公司名称字典
 
@@ -63,8 +65,8 @@ class Paydetail(FlaskForm):
 class AddPermissionForm(FlaskForm):
     """add new permission form class"""
 
-    company_addpm_input = SelectField('授权范围', validators=[Required()])
-    position_addpm_input = SelectField('授予职能', validators=[Required()], choices = [("", "---"), ("1","董事长"),("2","部门负责人")])
+    company_addpm_input = SelectField('授权公司范围', validators=[Required()])
+    position_addpm_input = SelectField('授予职能', validators=[Required()])
     usercompany_addpm_input = SelectField('被授权人所属公司', validators=[Required()])
     userdpt_addpm_input = SelectField('被授权人所在部门', validators=[Required()])
     user_addpm_input = SelectField('被授权人员', validators=[Required()], choices = [("", "---")])
@@ -91,7 +93,7 @@ class AddPermissionForm(FlaskForm):
     submit_addpm_btn = SubmitField('提交')
 
     def __init__(self, *args, **kwargs):
-        """预载入option防止pre_valid报错"""
+        """动态下拉选项，及预载入option防止pre_valid报错"""
         super(AddPermissionForm, self).__init__(*args, **kwargs)
         allusersoption = [("", "---")]
         for user in User.query.all():
@@ -111,12 +113,18 @@ class AddPermissionForm(FlaskForm):
             dpt_choices.append((str(i+1), label_dict.all_dpt_dict[i+1]))
         self.userdpt_addpm_input.choices = dpt_choices
 
+        position_choices = [("", "---")]
+        positiondict_disp = dict((key, value) for key, value in label_dict.all_dptincharge_dict.items() if key ==2 or key>3) 
+        for key, value in positiondict_disp.items():
+            position_choices.append((str(key),value))
+        self.position_addpm_input.choices = position_choices
+
 
 
 
 class Permissiondetail(FlaskForm):
     """授权单详情"""
-    idpermission_pmdt_input = StringField('授权单号', render_kw={'readonly': True})
+    idpermission_pmdt_input = StringField('授权书', render_kw={'readonly': True})
     company_pmdt_input = StringField('授权范围', render_kw={'readonly': True})
     position_pmdt_input = StringField('授予职能', render_kw={'readonly': True})
     usercompany_pmdt_input = StringField('被授权人所属公司', render_kw={'readonly': True})

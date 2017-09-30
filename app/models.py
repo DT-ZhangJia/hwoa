@@ -17,6 +17,7 @@ class Departments(mydb.Model):
     __tablename__ = 'departments'
     iddepartments = mydb.Column(mydb.Integer, primary_key=True)
     dptname = mydb.Column(mydb.String(64))
+    dptincharge = mydb.Column(mydb.String(64))
 
     def __repr__(self):
         return '<Department %r>' % self.name

@@ -6,13 +6,13 @@
 <div class="container">
     <div>
         <table class="table table-striped">
-            <tread><tr><th>授权单号</th><th>授权范围</th><th>授予职能</th><th>被授权人</th><th>授权期限</th><th>有效期自</th><th>有效期至</th></tr></tread>
+            <tread><tr><th>授权书</th><th>授权范围</th><th>授予职能</th><th>被授权人</th><th>授权期限</th><th>有效期自</th><th>有效期至</th></tr></tread>
             <tbody>
             {% for permission in permissionlist %}
                 <tr>
-                    <td> <a href="{{ url_for('work.permissiondetail', pmid=permission.idpermission, _external=True) }}">[授权单] {{ permission.idpermission }} 号</a> </td>
+                    <td> <a href="{{ url_for('work.permissiondetail', pmid=permission.idpermission, _external=True) }}">[授权书] {{ permission.idpermission }} 号</a> </td>
                     <td> {{ label_dict.all_company_dict[permission.companyid] }} </td>
-                    <td> {{ {1:'董事长',2:'部门负责人'}[permission.positionid] }} </td>
+                    <td> {{ label_dict.all_dptincharge_dict[permission.positionid] }} </td>
                     <td> {{ label_dict.all_users_dict[permission.puid] }} </td>
                     <td> {{ {1:'长期',2:'临时'}[permission.term] }}</td>
                     <td> {{ permission.termstart }} </td>
@@ -22,6 +22,7 @@
             {% endfor %}
             </tbody>
         </table>
+        {{ aaaaa }}
     </div>
 </div>
 {% endblock %}

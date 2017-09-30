@@ -247,7 +247,7 @@ def addpermission():
                                         term=addpermissionform_app.term_addpm_input.data,
                                         termstart=addpermissionform_app.termstart_addpm_input.data,
                                         termend=addpermissionform_app.termend_addpm_input.data,
-                                        approved=False,
+                                        approved=True,#这个开关等授权批准后改为False
                                         apprv100001=apprv100001_data,
                                         apprv100002=apprv100002_data,
                                         apprv100003=apprv100003_data,
@@ -302,15 +302,14 @@ def permissiondetail(pmid):
     else:
         permituser = User.query.filter_by(uid=permissiondetail_query.puid).first()
         #准备数据
-        allusers = User.query.all()
-        allusersdict = {} #用户姓名字典
-        for user in allusers:
-            allusersdict[user.uid] = user.name
-        companydict = {1:'辉文',2:'植森',3:'蓓蒂森'} #公司字典
-        dptdict = {1:"董事长",2:"财务中心",3:"行政中心",4:"化妆品事业部",5:"食品事业部",6:"日本事业部",7:"生产中心",8:"研发中心",9:"经营企划部",10:"工程部"}
-        positiondict = {1:"董事长",2:"部门负责人"} #职权字典
+        label_dict = LabelDict() #数据字典实例
+        companydict = label_dict.all_company_dict #公司字典
+        dptdict = label_dict.all_dpt_dict #部门字典
+        positiondict = label_dict.all_dptincharge_dict #职能字典
+        allusersdict = label_dict.all_users_dict #人员姓名字典
 
-        permissiondetail_app.idpermission_pmdt_input.data = "[授权单] "+str(permissiondetail_query.idpermission)+" 号"
+        #填充数据
+        permissiondetail_app.idpermission_pmdt_input.data = "[授权书] "+str(permissiondetail_query.idpermission)+" 号"
         permissiondetail_app.company_pmdt_input.data = companydict[permissiondetail_query.companyid]
         permissiondetail_app.position_pmdt_input.data = positiondict[permissiondetail_query.positionid]
         permissiondetail_app.usercompany_pmdt_input.data = companydict[permituser.company]
