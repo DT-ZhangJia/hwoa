@@ -7,7 +7,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, TextAreaField, SubmitField, PasswordField, BooleanField, ValidationError # pylint: disable=C0301
 from wtforms.fields.html5 import DateField
 from wtforms.validators import Required, Length, Regexp
-from ..models import Payments, Approvers, Permissions, User, Departments
+from ..models import Payments, Approvers, Permissions, User, Departments, Operations
 from flask_login import current_user
 from sqlalchemy import and_
 
@@ -103,14 +103,14 @@ class AddPermissionForm(FlaskForm):
         label_dict = LabelDict()
         
         company_choices = [("", "---")]
-        for i in range(0,len(label_dict.all_company_dict)):
-            company_choices.append((str(i+1), label_dict.all_company_dict[i+1]))
+        for key, value in label_dict.all_company_dict.items():
+            company_choices.append((str(key), value))
         self.company_addpm_input.choices = company_choices
         self.usercompany_addpm_input.choices = company_choices
 
         dpt_choices = [("", "---")]
-        for i in range(0,len(label_dict.all_dpt_dict)):
-            dpt_choices.append((str(i+1), label_dict.all_dpt_dict[i+1]))
+        for key, value in label_dict.all_dpt_dict.items():
+            dpt_choices.append((str(key), value))
         self.userdpt_addpm_input.choices = dpt_choices
 
         position_choices = [("", "---")]
@@ -133,6 +133,9 @@ class Permissiondetail(FlaskForm):
     term_pmdt_input = StringField('长期/临时', render_kw={'readonly': True})
     termstart_pmdt_input = DateField('授权开始日期',format='%Y-%m-%d' ,render_kw={'readonly': True})
     termend_pmdt_input = DateField('授权结束日期', format='%Y-%m-%d', render_kw={'readonly': True})
+    originstart_pmdt_input = DateField('原授权开始日期',format='%Y-%m-%d' ,render_kw={'readonly': True})
+    originend_pmdt_input = DateField('原授权结束日期', format='%Y-%m-%d', render_kw={'readonly': True})
+    valid_pmdt_input = StringField('当前是否生效', render_kw={'readonly': True})
     apprv100001_pmdt_input = StringField('1. 批准销售框架合同金额', render_kw={'readonly': True})
     apprv100002_pmdt_input = StringField('2. 批准销售订单合同金额', render_kw={'readonly': True})
     apprv100003_pmdt_input = StringField('3. 批准提供服务合同金额', render_kw={'readonly': True})
@@ -153,6 +156,35 @@ class Permissiondetail(FlaskForm):
 
 
 
-class ContractForm(FlaskForm):
-    """合同审批单"""
-    pass
+class ContractApplyForm(FlaskForm):
+    """提交合同审批单"""
+    company_apply_input = SelectField('订立合同公司', validators=[Required()])
+    applydpt_apply_input = SelectField('订立合同部门', validators=[Required()])
+    contracttype_apply_input = SelectField('合同业务类型', validators=[Required()])
+    content_apply_input = TextAreaField('合同内容', validators=[Required(), Length(1, 5120)]) 
+    amount_apply_input = StringField('标的金额', validators=[Required(), Length(1, 20), Regexp('^[0-9]+(.[0-9]{2})?$', 0, '使用金额格式，例：1234.56')])  # pylint: disable=C0301
+    submit_apply_btn = SubmitField('提交')
+
+    def __init__(self, *args, **kwargs):
+        """动态下拉选项"""
+        super(ContractApplyForm, self).__init__(*args, **kwargs)
+        
+        label_dict = LabelDict()
+
+        company_choices = [("", "---")]
+        for key, value in label_dict.all_company_dict.items():
+            company_choices.append((str(key), value))
+        self.company_apply_input.choices = company_choices
+        
+        applydpt_choices = [("", "---")]
+        applydptdict_disp = dict((key, value) for key, value in label_dict.all_dpt_dict.items() if key>3) 
+        for key, value in applydptdict_disp.items():
+            applydpt_choices.append((str(key),value))
+        self.applydpt_apply_input.choices = applydpt_choices
+
+        op_choices = [("", "---")]
+        contractop = Operations.query.all()
+        for op in contractop:
+            if op.idoperations < 18:
+                op_choices.append((str(op.idoperations),op.opname))
+        self.contracttype_apply_input.choices = op_choices

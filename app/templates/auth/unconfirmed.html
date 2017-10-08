@@ -5,16 +5,16 @@
 {% block page_content %}
 <div class="page-header">
     <h1>
-        Hello, {{ current_user.username }}!
+        你好， {{ current_user.username }}！
     </h1>
-    <h3>You have not confirmed your account yet.</h3>
+    <h3>您的账号尚未确认。</h3>
     <p>
-        Before you can access this site you need to confirm your account.
-        Check your inbox, you should have received an email with a confirmation link.
+        必须确认您的账号后才能访问本系统。
+        检查您的邮箱，有一封指导确认账号的邮件已发送。
     </p>
     <p>
-        Need another confirmation email?
-        <a href="{{ url_for('auth.resend_confirmation') }}">Click here</a>
+        重发确认邮件？
+        <a href="{{ url_for('auth.resend_confirmation') }}">请点击这里</a>
     </p>
 </div>
 {% endblock %}

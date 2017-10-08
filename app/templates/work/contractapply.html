@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block title %}Huiwen OA - 合同申请{% endblock %}
+
+{% block page_content %}
+
+<style type="text/css">
+    #content_apply_input {
+        height:100px;
+    }
+</style>
+
+
+<div class="page-header">
+    <h1>合同申请</h1>
+</div>
+
+<div class="col-md-4">
+    {{ wtf.quick_form(contractapply_display) }}
+    <div style="height:30px"></div>
+</div>
+
+
+
+{% endblock %}

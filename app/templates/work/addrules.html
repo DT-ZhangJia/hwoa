@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Huiwen OA{% endblock %}
+
+{% block page_content %}
+
+<div class="page-header">
+    <h1>授权规则说明</h1>
+</div>
+    
+<div>
+    <ol>
+        <li style="margin:1em">具有A公司董事长权限的用户，可以授权其他用户获得A公司部门长的长期权限。</li>
+        <li style="margin:1em">具有A公司部门长权限的用户，可以授权其他用户获得A公司部门长的临时权限。</li>
+        <li style="margin:1em">不具有A公司权限的用户，不可授予其他用户A公司的相关权限。</li>
+        <li style="margin:1em">长期部门长同一时间内只能有一名，临时部门长同一时间内也只能有一名。</li>
+        <li style="margin:1em">设定新部门长权限时间范围与原部门长有重叠时，原部门长的授权即刻失效。</li>
+    </ol>
+</div>
+<div style="height:50px"></div>
+<div style="font-weight:bold; margin:1em">部门权限一览</div>
+<div>
+        <table class="table table-striped">
+            <tread><tr><th>公司</th><th>部门</th><th>部门审批权限</th><th>交叉复核人</th></tr></tread>
+            <tbody>
+                {% for key_i,value_i in rule_dict.items() %}
+                    {% for key_j,value_j in value_i.items() %}
+                        <tr>
+                            <td>{{ label_dict.all_company_dict[key_i] }}</td>
+                            <td>{{ label_dict.all_dpt_dict[key_j] }}</td>
+                            <td>{% for name1 in value_j[0] %} {{ label_dict.all_users_dict[name1] }} &nbsp&nbsp {% endfor %}</td>
+                            <td>{% for name2 in value_j[1] %} {{ label_dict.all_users_dict[name2] }} &nbsp&nbsp {% endfor %}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr><td></td><td></td><td></td><td></td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</div>
+
+{% endblock %}

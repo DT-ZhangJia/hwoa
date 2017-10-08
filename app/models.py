@@ -20,7 +20,7 @@ class Departments(mydb.Model):
     dptincharge = mydb.Column(mydb.String(64))
 
     def __repr__(self):
-        return '<Department %r>' % self.name
+        return '<Department %r>' % self.iddepartments
 
 
 class Payments(mydb.Model):
@@ -38,7 +38,7 @@ class Payments(mydb.Model):
     approvetime = mydb.Column(mydb.DateTime)
 
     def __repr__(self):
-        return '<Payment %r>' % self.name
+        return '<Payment %r>' % self.idpayment
 
 class Approvers(mydb.Model):
     """Approvers"""
@@ -48,7 +48,7 @@ class Approvers(mydb.Model):
     approveruid = mydb.Column(mydb.Integer)
 
     def __repr__(self):
-        return '<Approver %r>' % self.name
+        return '<Approver %r>' % self.idapprover
 
 
 class Permissions(mydb.Model):
@@ -61,7 +61,10 @@ class Permissions(mydb.Model):
     term = mydb.Column(mydb.Integer)
     termstart = mydb.Column(mydb.DateTime)
     termend = mydb.Column(mydb.DateTime)
+    originstart = mydb.Column(mydb.DateTime)
+    originend = mydb.Column(mydb.DateTime)
     approved = mydb.Column(mydb.Boolean)
+    valid = mydb.Column(mydb.Boolean)
     apprv100001 = mydb.Column(mydb.Float)
     apprv100002 = mydb.Column(mydb.Float)
     apprv100003 = mydb.Column(mydb.Float)
@@ -81,7 +84,7 @@ class Permissions(mydb.Model):
     apprv100017 = mydb.Column(mydb.Float)
 
     def __repr__(self):
-        return '<Permissions %r>' % self.name
+        return '<Permissions %r>' % self.idpermission
 
 
 class Operations(mydb.Model):
@@ -94,7 +97,7 @@ class Operations(mydb.Model):
     opapprvname = mydb.Column(mydb.String(64))
 
     def __repr__(self):
-        return '<Operations %r>' % self.name
+        return '<Operations %r>' % self.idoperations
 
 
 
@@ -107,7 +110,7 @@ class Lawyers(mydb.Model):
     consultantuid = mydb.Column(mydb.Integer)
 
     def __repr__(self):
-        return '<Lawyers %r>' % self.name
+        return '<Lawyers %r>' % self.idlawyer
 
 
 class Crossvalids(mydb.Model):
@@ -119,7 +122,7 @@ class Crossvalids(mydb.Model):
     crossuid = mydb.Column(mydb.Integer)
 
     def __repr__(self):
-        return '<Crossvalids %r>' % self.name
+        return '<Crossvalids %r>' % self.idcrossvalids
 
 
 
@@ -164,7 +167,7 @@ class Contracts(mydb.Model):
 
 
     def __repr__(self):
-        return '<Contracts %r>' % self.name
+        return '<Contracts %r>' % self.idcontracts
 
 
 
