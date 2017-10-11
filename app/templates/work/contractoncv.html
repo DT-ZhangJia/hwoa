@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Huiwen OA - 合同交叉复核{% endblock %}
+
+{% block page_content %}
+<style type="text/css">
+    #content_cv_input, #cvcontent_cv_input, #lawcontent_cv_input, #acccontent_cv_input {
+        height:100px;
+    }
+</style>
+
+    <div class="page-header"> 
+    <h1>合同交叉复核</h1>
+    </div>
+    <div class="col-md-4">
+            {{ wtf.quick_form(contractcvform_disp) }}
+        <br>
+        <br>
+    </div>
+{% endblock %}

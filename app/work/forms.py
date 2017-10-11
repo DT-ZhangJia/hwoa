@@ -161,7 +161,7 @@ class ContractApplyForm(FlaskForm):
     company_apply_input = SelectField('订立合同公司', validators=[Required()])
     applydpt_apply_input = SelectField('订立合同部门', validators=[Required()])
     contracttype_apply_input = SelectField('合同业务类型', validators=[Required()])
-    content_apply_input = TextAreaField('合同内容', validators=[Required(), Length(1, 5120)]) 
+    content_apply_input = TextAreaField('合同内容', validators=[Required(), Length(1, 5120)])
     amount_apply_input = StringField('标的金额', validators=[Required(), Length(1, 20), Regexp('^[0-9]+(.[0-9]{2})?$', 0, '使用金额格式，例：1234.56')])  # pylint: disable=C0301
     submit_apply_btn = SubmitField('提交')
 
@@ -188,3 +188,147 @@ class ContractApplyForm(FlaskForm):
             if op.idoperations < 18:
                 op_choices.append((str(op.idoperations),op.opname))
         self.contracttype_apply_input.choices = op_choices
+
+
+
+class ContractCVForm(FlaskForm):
+    """提交合同交叉复核表单"""
+    company_cv_input = StringField('订立合同公司', render_kw={'readonly': True})
+    applydpt_cv_input = StringField('订立合同部门', render_kw={'readonly': True})
+    contracttype_cv_input = StringField('合同业务类型', render_kw={'readonly': True})
+    content_cv_input = TextAreaField('合同内容', render_kw={'readonly': True})
+    amount_cv_input = StringField('标的金额', render_kw={'readonly': True}) # pylint: disable=C0301
+    applier_cv_input = StringField('合同提交人', render_kw={'readonly': True})
+    applytime_cv_input = StringField('合同提交时间', render_kw={'readonly': True})
+
+    lawyer_cv_input = StringField('法务审核人', render_kw={'readonly': True})
+    lawcontent_cv_input = TextAreaField('法务复核意见', render_kw={'readonly': True})
+    lawopinion_cv_input = StringField('是否有异议', render_kw={'readonly': True})
+    lawyertime_cv_input = StringField('法务复核时间', render_kw={'readonly': True})
+
+    acc_cv_input = StringField('财务审核人', render_kw={'readonly': True})
+    acccontent_cv_input = TextAreaField('财务复核意见', render_kw={'readonly': True})
+    accopinion_cv_input = StringField('是否有异议', render_kw={'readonly': True})
+    acctime_cv_input = StringField('财务复核时间', render_kw={'readonly': True})
+
+    cvcontent_cv_input = TextAreaField('交叉复核意见', validators=[Length(0, 2048)])
+    cvopinion_cv_input = SelectField('是否有异议',validators=[Required()], choices=[("", "---"), ('0','无异议'), ('1','有异议')])
+
+    submit_cv_btn = SubmitField('提交交叉复核意见')
+
+
+
+class ContractLawForm(FlaskForm):
+    """提交合同法务复核表单"""
+    company_law_input = StringField('订立合同公司', render_kw={'readonly': True})
+    applydpt_law_input = StringField('订立合同部门', render_kw={'readonly': True})
+    contracttype_law_input = StringField('合同业务类型', render_kw={'readonly': True})
+    content_law_input = TextAreaField('合同内容', render_kw={'readonly': True})
+    amount_law_input = StringField('标的金额', render_kw={'readonly': True}) # pylint: disable=C0301
+    applier_law_input = StringField('合同提交人', render_kw={'readonly': True})
+    applytime_law_input = StringField('合同提交时间', render_kw={'readonly': True})
+
+    cvuser_law_input = StringField('交叉复核人', render_kw={'readonly': True})
+    cvcontent_law_input = TextAreaField('交叉复核意见', render_kw={'readonly': True})
+    cvopinion_law_input = StringField('是否有异议', render_kw={'readonly': True})
+    cvtime_law_input = StringField('交叉复核时间', render_kw={'readonly': True})
+
+    acc_law_input = StringField('财务审核人', render_kw={'readonly': True})
+    acccontent_law_input = TextAreaField('财务复核意见', render_kw={'readonly': True})
+    accopinion_law_input = StringField('是否有异议', render_kw={'readonly': True})
+    acctime_law_input = StringField('财务复核时间', render_kw={'readonly': True})
+
+    lawcontent_law_input = TextAreaField('法务复核意见', validators=[Length(0, 2048)])
+    lawopinion_law_input = SelectField('是否有异议',validators=[Required()], choices=[("", "---"), ('0','无异议'), ('1','有异议')])
+
+    submit_law_btn = SubmitField('提交法务复核意见')
+
+
+
+class ContractAccForm(FlaskForm):
+    """提交合同财务复核表单"""
+    company_acc_input = StringField('订立合同公司', render_kw={'readonly': True})
+    applydpt_acc_input = StringField('订立合同部门', render_kw={'readonly': True})
+    contracttype_acc_input = StringField('合同业务类型', render_kw={'readonly': True})
+    content_acc_input = TextAreaField('合同内容', render_kw={'readonly': True})
+    amount_acc_input = StringField('标的金额', render_kw={'readonly': True}) # pylint: disable=C0301
+    applier_acc_input = StringField('合同提交人', render_kw={'readonly': True})
+    applytime_acc_input = StringField('合同提交时间', render_kw={'readonly': True})
+
+    cvuser_acc_input = StringField('交叉复核人', render_kw={'readonly': True})
+    cvcontent_acc_input = TextAreaField('交叉复核意见', render_kw={'readonly': True})
+    cvopinion_acc_input = StringField('是否有异议', render_kw={'readonly': True})
+    cvtime_acc_input = StringField('交叉复核时间', render_kw={'readonly': True})
+
+    lawyer_acc_input = StringField('法务审核人', render_kw={'readonly': True})
+    lawcontent_acc_input = TextAreaField('法务复核意见', render_kw={'readonly': True})
+    lawopinion_acc_input = StringField('是否有异议', render_kw={'readonly': True})
+    lawyertime_acc_input = StringField('法务复核时间', render_kw={'readonly': True})
+
+    acccontent_acc_input = TextAreaField('财务复核意见', validators=[Length(0, 2048)])
+    accopinion_acc_input = SelectField('是否有异议',validators=[Required()], choices=[("", "---"), ('0','无异议'), ('1','有异议')])
+
+    submit_acc_btn = SubmitField('提交财务复核意见')
+
+
+
+class ContractDPTForm(FlaskForm):
+    """提交合同部门批复表单"""
+    company_dpt_input = StringField('订立合同公司', render_kw={'readonly': True})
+    applydpt_dpt_input = StringField('订立合同部门', render_kw={'readonly': True})
+    contracttype_dpt_input = StringField('合同业务类型', render_kw={'readonly': True})
+    content_dpt_input = TextAreaField('合同内容', render_kw={'readonly': True})
+    amount_dpt_input = StringField('标的金额', render_kw={'readonly': True}) # pylint: disable=C0301
+    applier_dpt_input = StringField('合同提交人', render_kw={'readonly': True})
+    applytime_dpt_input = StringField('合同提交时间', render_kw={'readonly': True})
+
+    cvuser_dpt_input = StringField('交叉复核人', render_kw={'readonly': True})
+    cvcontent_dpt_input = TextAreaField('交叉复核意见', render_kw={'readonly': True})
+    cvopinion_dpt_input = StringField('是否有异议', render_kw={'readonly': True})
+    cvtime_dpt_input = StringField('交叉复核时间', render_kw={'readonly': True})
+
+    lawyer_dpt_input = StringField('法务审核人', render_kw={'readonly': True})
+    lawcontent_dpt_input = TextAreaField('法务复核意见', render_kw={'readonly': True})
+    lawopinion_dpt_input = StringField('是否有异议', render_kw={'readonly': True})
+    lawyertime_dpt_input = StringField('法务复核时间', render_kw={'readonly': True})
+
+    acc_dpt_input = StringField('财务审核人', render_kw={'readonly': True})
+    acccontent_dpt_input = TextAreaField('财务复核意见', render_kw={'readonly': True})
+    accopinion_dpt_input = StringField('是否有异议', render_kw={'readonly': True})
+    acctime_dpt_input = StringField('财务复核时间', render_kw={'readonly': True})
+
+    apprvopinion_dpt_input = SelectField('是否批准订立',validators=[Required()], choices=[("", "---"), ('0','不同意'), ('1','同意')])
+
+    submit_dpt_btn = SubmitField('提交批复')
+
+
+class ContractViewForm(FlaskForm):
+    """提交合同部门批复表单"""
+    company_view_input = StringField('订立合同公司', render_kw={'readonly': True})
+    applydpt_view_input = StringField('订立合同部门', render_kw={'readonly': True})
+    contracttype_view_input = StringField('合同业务类型', render_kw={'readonly': True})
+    content_view_input = TextAreaField('合同内容', render_kw={'readonly': True})
+    amount_view_input = StringField('标的金额', render_kw={'readonly': True}) # pylint: disable=C0301
+    applier_view_input = StringField('合同提交人', render_kw={'readonly': True})
+    applytime_view_input = StringField('合同提交时间', render_kw={'readonly': True})
+
+    cvuser_view_input = StringField('交叉复核人', render_kw={'readonly': True})
+    cvcontent_view_input = TextAreaField('交叉复核意见', render_kw={'readonly': True})
+    cvopinion_view_input = StringField('是否有异议', render_kw={'readonly': True})
+    cvtime_view_input = StringField('交叉复核时间', render_kw={'readonly': True})
+
+    lawyer_view_input = StringField('法务审核人', render_kw={'readonly': True})
+    lawcontent_view_input = TextAreaField('法务复核意见', render_kw={'readonly': True})
+    lawopinion_view_input = StringField('是否有异议', render_kw={'readonly': True})
+    lawyertime_view_input = StringField('法务复核时间', render_kw={'readonly': True})
+
+    acc_view_input = StringField('财务审核人', render_kw={'readonly': True})
+    acccontent_view_input = TextAreaField('财务复核意见', render_kw={'readonly': True})
+    accopinion_view_input = StringField('是否有异议', render_kw={'readonly': True})
+    acctime_view_input = StringField('财务复核时间', render_kw={'readonly': True})
+
+    auth_view_input = StringField('批准授权书', render_kw={'readonly': True})
+    approver_view_input = StringField('批准人', render_kw={'readonly': True})
+    apprvopinion_view_input = StringField('是否批准订立', render_kw={'readonly': True})
+    apprvtime_view_input = StringField('批准时间', render_kw={'readonly': True})
+

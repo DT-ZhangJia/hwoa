@@ -10,7 +10,7 @@ import pytz
 from .. import mydb
 from .forms import LabelDict, PayapplyForm, Paydetail, AddPermissionForm, Permissiondetail
 from . import work
-from ..models import Payments, Approvers, User, Permissions, Departments, Crossvalids
+from ..models import Payments, Approvers, User, Permissions, Departments, Crossvalids, Lawyers
 from sqlalchemy import and_, or_
 
 
@@ -447,7 +447,13 @@ def addrules():
         rule_dict[key_i] = dpt_dict
 
     #法务财务表格数据
+    lawyers = Lawyers.query.all()
+    lawyer_dict = {}
+    lawuidlist = []
+    accuidlist = []
+    for key, _ in label_dict.all_company_dict.items():
+        lawuidlist = [lawyer.consultantuid for lawyer in lawyers if lawyer.companyid==key and lawyer.consultant==1]
+        accuidlist = [acc.consultantuid for acc in lawyers if acc.companyid==key and acc.consultant==2]
+        lawyer_dict[key] = [lawuidlist,accuidlist]
 
-
-
-    return render_template('work/addrules.html', label_dict=label_dict, rule_dict=rule_dict)
+    return render_template('work/addrules.html', label_dict=label_dict, rule_dict=rule_dict, lawyer_dict=lawyer_dict)

@@ -18,7 +18,27 @@
         <li style="margin:1em">设定新部门长权限时间范围与原部门长有重叠时，原部门长的授权即刻失效。</li>
     </ol>
 </div>
-<div style="height:50px"></div>
+
+<div style="height:30px"></div>
+
+<div style="font-weight:bold; margin:1em">法务财务复核人一览</div>
+<div>
+    <table class="table table-striped">
+        <tread><tr><th>公司</th><th>法务复核人</th><th>财务复核人</th></tr></tread>
+        <tbody>
+            {% for key, value in lawyer_dict.items() %}
+                <tr>
+                    <td>{{ label_dict.all_company_dict[key] }}</td>
+                    <td>{% for name3 in value[0] %}{{ label_dict.all_users_dict[name3] }} &nbsp&nbsp {% endfor %}</td>
+                    <td>{% for name4 in value[1] %}{{ label_dict.all_users_dict[name4] }} &nbsp&nbsp {% endfor %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div style="height:30px"></div>
+
 <div style="font-weight:bold; margin:1em">部门权限一览</div>
 <div>
         <table class="table table-striped">
@@ -38,5 +58,7 @@
             </tbody>
         </table>
 </div>
+
+
 
 {% endblock %}

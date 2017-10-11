@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Huiwen OA - 合同部门批复{% endblock %}
+
+{% block page_content %}
+<style type="text/css">
+    #content_dpt_input, #cvcontent_dpt_input, #lawcontent_dpt_input, #acccontent_dpt_input {
+        height:100px;
+    }
+</style>
+
+    <div class="page-header"> 
+    <h1>合同部门批复</h1>
+    </div>
+    <div class="col-md-4">
+            {{ wtf.quick_form(contractdptform_disp) }}
+        <br>
+        <br>
+    </div>
+{% endblock %}

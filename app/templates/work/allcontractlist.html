@@ -6,7 +6,7 @@
 <div class="container">
     <div>
         <table class="table table-striped">
-            <tread><tr><th>申请时间</th><th>公司</th><th>部门</th><th>内容</th><th style="text-align:right;">金额&nbsp&nbsp&nbsp&nbsp</th><th>申请人</th><th>审批状态</th></tr></tread>
+            <tread><tr><th>申请时间</th><th>公司</th><th>部门</th><th>内容</th><th style="text-align:right;">金额&nbsp&nbsp&nbsp&nbsp</th><th>申请人</th><th>详情</th></tr></tread>
             <tbody>
                 {% for contract in allcontract %}
                 <tr>
@@ -16,7 +16,7 @@
                     <td><div style="border:none;overflow:hidden; text-overflow:ellipsis; white-space:nowrap"> {{ contract.content }} </div></td>
                     <td min-width=200px nowrap style="text-align:right;"> {{ contract.amount }} </td>
                     <td> {{ label_dict.all_users_dict[contract.applieruid] }} </td>
-                    <td> 已提交 </td>
+                    <td> <a href="{{ url_for('work.contractview', contractid=contract.idcontracts, _external=True) }}">点击查看详情</a> </td>
                 </tr>
                 {% endfor %}
             </tbody>
