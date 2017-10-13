@@ -332,3 +332,8 @@ class ContractViewForm(FlaskForm):
     apprvopinion_view_input = StringField('是否批准订立', render_kw={'readonly': True})
     apprvtime_view_input = StringField('批准时间', render_kw={'readonly': True})
 
+
+class ViewPDF(FlaskForm):
+    """提交合同部门批复表单"""
+    blank = StringField('label', render_kw={'readonly': True})
+    submit_pdf_btn = SubmitField('生成PDF')

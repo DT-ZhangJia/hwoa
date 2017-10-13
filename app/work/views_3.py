@@ -3,7 +3,7 @@
 """
 # pylint: disable=invalid-name, too-few-public-methods
 from datetime import datetime
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, make_response
 from flask_login import login_required, current_user
 from flask_moment import Moment
 import pytz
@@ -11,11 +11,12 @@ from sqlalchemy import and_, or_, not_
 from .. import mydb
 from .forms import LabelDict, PayapplyForm, Paydetail, AddPermissionForm, \
     Permissiondetail, ContractApplyForm, ContractCVForm, ContractLawForm, ContractAccForm, \
-    ContractDPTForm, ContractViewForm
+    ContractDPTForm, ContractViewForm, ViewPDF
 from . import work
 from ..models import Payments, Approvers, User, Permissions, Departments, \
     Operations, Contracts, Crossvalids, Lawyers
-
+import pdfkit
+#from io import BytesIO
 
 
 @work.route('/contractapply', methods=['GET', 'POST'])
@@ -188,11 +189,23 @@ def contractview(contractid):
         contractviewform_app.apprvtime_view_input.data = contract.apprvtime
 
 
+
+
     else:
         return render_template('404.html'), 404
 
+    viewpdf = ViewPDF()
+    if viewpdf.is_submitted():
+        htmlfile = render_template('work/contractpdf.html', pdfdata=contractviewform_app, label_dict=label_dict)
+        pdffile = pdfkit.from_string(htmlfile,False)
+        response = make_response(pdffile)
+        response.headers['Content-Type'] = 'aplication/pdf'
+        response.headers['Content-Disposition'] = 'attachment; filename=contract_'+contractid+'.pdf'
+        return response
+    
+
     return render_template('work/contractview.html', contractviewform_disp=contractviewform_app,
-                           label_dict=label_dict)
+                           viewpdf=viewpdf, label_dict=label_dict)
 
 
 
@@ -778,3 +791,4 @@ def contractreview():
     return render_template('work/contractreview.html', dptreview=dptreview,
                            cvreview=cvreview, lawreview=lawreview, accreview=accreview,
                            label_dict=label_dict)
+

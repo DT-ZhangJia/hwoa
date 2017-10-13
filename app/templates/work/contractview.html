@@ -10,12 +10,21 @@
     }
 </style>
 
+    
     <div class="page-header"> 
     <h1>合同申请</h1>
     </div>
+
+    
     <div class="col-md-4">
             {{ wtf.quick_form(contractviewform_disp) }}
+            <form method="POST">
+            {{ viewpdf.hidden_tag() }}
+            {{ viewpdf.submit_pdf_btn(class="btn btn-default") }}
+            </form>
         <br>
         <br>
     </div>
+
+
 {% endblock %}
