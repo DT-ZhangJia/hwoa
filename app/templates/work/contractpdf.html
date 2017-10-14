@@ -6,23 +6,23 @@
 <style type="text/css">
 table,table tr th, table tr td { 
 	border:1px solid #000000; 
-	font-size: 14px;
+	font-size: 18px;
 	}
 
 #frame {
 	margin: 0 auto;
-	width:630px;
-	height: 850px;
+	width:850px;
+	height: 1150px;
 	border:0px solid #000000;
 }
 #title {
-	width: 630px;
+	width: 850px;
 	text-align: center;
 }
 #table1{
-	width: 630px;
-	min-height: 30px; 
-	line-height: 30px; 
+	width: 850px;
+	min-height: 40px; 
+	line-height: 40px; 
 	border-collapse: collapse; 
 	border-top:2px solid #000000;
 	border-left:2px solid #000000;
@@ -30,35 +30,62 @@ table,table tr th, table tr td {
 	padding:2px;
 }
 #table2{
-	width: 630px;
-	min-height: 30px; 
-	line-height: 30px; 
+	width: 850px;
+	min-height: 40px; 
+	line-height: 40px; 
 	border-collapse: collapse; 
 	border-left:2px solid #000000;
 	border-right:2px solid #000000;
 	padding:2px;
 }
 #table3{
-	width: 630px;
-	min-height: 30px; 
-	line-height: 30px; 
+	width: 850px;
+	min-height: 40px; 
+	line-height: 40px; 
 	border-left:2px solid #000000;
 	border-right:2px solid #000000;
 	border-bottom: 2px solid #000000;
 	border-collapse: collapse; 
 	padding:2px;
 }
+#content1{
+    padding-left: 5px;
+    padding-right: 5px;
+    line-height: 32px;
+    min-height: 32px;
+    height: 195px;
+    max-width: 735px;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+}
+#content2{
+    padding-left: 5px;
+    padding-right: 5px;
+    line-height: 32px;
+    min-height: 32px;
+    height: 96px;
+    max-width: 735px;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+}
+
 </style>
 </head>
 
 <body>
 
 <div id="frame">
-<div id="title"><span style="font-size: 24px; font-weight: 400">合同申请单</span></div>
-<div style="float:left; display:inline"><p style="font-size: 14px">
+<div id="title"><span style="font-size: 32px; font-weight: 400">合同申请单</span></div>
+<div style="float:left; display:inline"><p style="font-size: 18px">
     &nbsp;<span style="font-weight: bold">所属公司：</span>
     {{ pdfdata.company_view_input.data }}</p></div>
-<div style="width:80px; float:right; display:inline"><p style="font-size: 14px">
+<div style="width:120px; float:right; display:inline"><p style="font-size: 18px">
     <span style="font-weight: bold">序号：</span>{{ contractid }}</p></div>
 <center>
 <div>
@@ -66,8 +93,8 @@ table,table tr th, table tr td {
   <tbody>
     <tr>
       <td style="width:115px; font-weight: bold">
-          &nbsp;{{ pdfdata.applydpt_view_input.data }}</td>
-      <td style="width:200px">&nbsp;生产中心</td>
+          &nbsp;订立合同部门</td>
+      <td style="width:200px">&nbsp;{{ pdfdata.applydpt_view_input.data }}</td>
       <td style="width:115px; font-weight: bold">&nbsp;合同业务类型</td>
       <td style="width:200px">
           &nbsp;{{ pdfdata.contracttype_view_input.data }}</td>
@@ -82,7 +109,7 @@ table,table tr th, table tr td {
     </tr>
     <tr>
       <td style="width:115px; font-weight: bold">&nbsp;合同内容</td>
-      <td colspan="3"><div style="padding-left: 5px; line-height: 24px; min-height: 28px; height: 144px">
+      <td colspan="3"><div id="content1">
             {{ pdfdata.content_view_input.data }}
 	  </td>
     </tr>
@@ -101,7 +128,7 @@ table,table tr th, table tr td {
     <tr>
       <td style="width:115px; font-weight: bold">&nbsp;交叉复核意见</td>
       <td colspan="3">
-          <div style="padding-left: 5px; line-height: 24px; min-height: 28px; height: 72px">
+          <div id="content2">
           {{ pdfdata.cvcontent_view_input.data }}
           </div>
    		  <div style="padding-left: 5px; border-top: 1px solid #000000">
@@ -122,7 +149,7 @@ table,table tr th, table tr td {
     <tr>
       <td style="width:115px; font-weight: bold">&nbsp;法务审核意见</td>
       <td colspan="3">
-          <div style="padding-left: 5px; line-height: 24px; min-height: 28px; height: 72px">
+          <div id="content2">
           {{ pdfdata.lawcontent_view_input.data }}
           </div>
    		  <div style="padding-left: 5px; border-top: 1px solid #000000">
@@ -143,7 +170,7 @@ table,table tr th, table tr td {
     <tr>
       <td style="width:115px; font-weight: bold">&nbsp;财务审核意见</td>
       <td colspan="3">
-          <div style="padding-left: 5px; line-height: 24px; min-height: 28px;height: 72px">
+          <div id="content2">
           {{ pdfdata.acccontent_view_input.data }}
           </div>
    		  <div style="padding-left: 5px; border-top: 1px solid #000000">
@@ -167,7 +194,7 @@ table,table tr th, table tr td {
     </tr>
   </tbody>
 </table>
-<table id="table3">
+<table id="table2">
   <tbody>
     <tr>
       <td style="width:115px; font-weight: bold">&nbsp;二级复核意见</td>
@@ -183,6 +210,16 @@ table,table tr th, table tr td {
     </tr>
   </tbody>
 </table>
+<table id="table3">
+        <tbody>
+          <tr>
+            <td style="width:115px; font-weight: bold">&nbsp;盖章人</td>
+            <td style="width:200px">&nbsp;[暂缺]</td>
+            <td style="width:115px; font-weight: bold">&nbsp;盖章时间</td>
+            <td style="width:200px">&nbsp;</td>
+          </tr>
+        </tbody>
+      </table>
 </center>
 </div>
 </body>
