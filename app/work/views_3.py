@@ -196,7 +196,7 @@ def contractview(contractid):
 
     viewpdf = ViewPDF()
     if viewpdf.is_submitted():
-        htmlfile = render_template('work/contractpdf.html', pdfdata=contractviewform_app, label_dict=label_dict)
+        htmlfile = render_template('work/contractpdf.html', pdfdata=contractviewform_app, label_dict=label_dict, contractid=contractid)
         pdffile = pdfkit.from_string(htmlfile,False)
         response = make_response(pdffile)
         response.headers['Content-Type'] = 'aplication/pdf'

@@ -1,8 +1,190 @@
+<!doctype html>
 <html>
-    <head>
-    <meta http-equiv="content-type" content="text/html;charset=utf-8">
-    </head>
-    <body>
-        {{ pdfdata.content_view_input.data }}
-    </body>
+<head>
+<meta charset="UTF-8">
+<title>合同申请单</title>
+<style type="text/css">
+table,table tr th, table tr td { 
+	border:1px solid #000000; 
+	font-size: 14px;
+	}
+
+#frame {
+	margin: 0 auto;
+	width:630px;
+	height: 850px;
+	border:0px solid #000000;
+}
+#title {
+	width: 630px;
+	text-align: center;
+}
+#table1{
+	width: 630px;
+	min-height: 30px; 
+	line-height: 30px; 
+	border-collapse: collapse; 
+	border-top:2px solid #000000;
+	border-left:2px solid #000000;
+	border-right:2px solid #000000;
+	padding:2px;
+}
+#table2{
+	width: 630px;
+	min-height: 30px; 
+	line-height: 30px; 
+	border-collapse: collapse; 
+	border-left:2px solid #000000;
+	border-right:2px solid #000000;
+	padding:2px;
+}
+#table3{
+	width: 630px;
+	min-height: 30px; 
+	line-height: 30px; 
+	border-left:2px solid #000000;
+	border-right:2px solid #000000;
+	border-bottom: 2px solid #000000;
+	border-collapse: collapse; 
+	padding:2px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="frame">
+<div id="title"><span style="font-size: 24px; font-weight: 400">合同申请单</span></div>
+<div style="float:left; display:inline"><p style="font-size: 14px">
+    &nbsp;<span style="font-weight: bold">所属公司：</span>
+    {{ pdfdata.company_view_input.data }}</p></div>
+<div style="width:80px; float:right; display:inline"><p style="font-size: 14px">
+    <span style="font-weight: bold">序号：</span>{{ contractid }}</p></div>
+<center>
+<div>
+<table id="table1">
+  <tbody>
+    <tr>
+      <td style="width:115px; font-weight: bold">
+          &nbsp;{{ pdfdata.applydpt_view_input.data }}</td>
+      <td style="width:200px">&nbsp;生产中心</td>
+      <td style="width:115px; font-weight: bold">&nbsp;合同业务类型</td>
+      <td style="width:200px">
+          &nbsp;{{ pdfdata.contracttype_view_input.data }}</td>
+    </tr>
+    <tr>
+      <td style="width:115px; font-weight: bold">&nbsp;合同提交人</td>
+      <td style="width:200px">
+          &nbsp;{{ pdfdata.applier_view_input.data }}</td>
+      <td style="width:115px; font-weight: bold">&nbsp;合同提交时间</td>
+      <td style="width:200px">
+          &nbsp;{{ pdfdata.applytime_view_input.data }}</td>
+    </tr>
+    <tr>
+      <td style="width:115px; font-weight: bold">&nbsp;合同内容</td>
+      <td colspan="3"><div style="padding-left: 5px; line-height: 24px; min-height: 28px; height: 144px">
+            {{ pdfdata.content_view_input.data }}
+	  </td>
+    </tr>
+  </tbody>
+</table>
+<table id="table2">
+  <tbody>
+    <tr>
+      <td style="width:115px; font-weight: bold">&nbsp;交叉复核人</td>
+      <td style="width:200px">
+          &nbsp;{{ pdfdata.cvuser_view_input.data }}</td>
+      <td style="width:115px; font-weight: bold">&nbsp;交叉复核时间</td>
+      <td style="width:200px">
+          &nbsp;{{ pdfdata.cvtime_view_input.data }}</td>
+    </tr>
+    <tr>
+      <td style="width:115px; font-weight: bold">&nbsp;交叉复核意见</td>
+      <td colspan="3">
+          <div style="padding-left: 5px; line-height: 24px; min-height: 28px; height: 72px">
+          {{ pdfdata.cvcontent_view_input.data }}
+          </div>
+   		  <div style="padding-left: 5px; border-top: 1px solid #000000">
+                 是否有异议：{{ pdfdata.cvopinion_view_input.data }}</div></td>
+    </tr>
+  </tbody>
+</table>
+<table id="table2">
+  <tbody>
+    <tr>
+      <td style="width:115px; font-weight: bold">&nbsp;法务审核人</td>
+      <td style="width:200px">
+          &nbsp;{{ pdfdata.lawyer_view_input.data }}</td>
+      <td style="width:115px; font-weight: bold">&nbsp;法务审核时间</td>
+      <td style="width:200px">
+          &nbsp;{{ pdfdata.lawyertime_view_input.data }}</td>
+    </tr>
+    <tr>
+      <td style="width:115px; font-weight: bold">&nbsp;法务审核意见</td>
+      <td colspan="3">
+          <div style="padding-left: 5px; line-height: 24px; min-height: 28px; height: 72px">
+          {{ pdfdata.lawcontent_view_input.data }}
+          </div>
+   		  <div style="padding-left: 5px; border-top: 1px solid #000000">
+                 是否有异议：{{ pdfdata.lawopinion_view_input.data }}</div></td>
+    </tr>
+  </tbody>
+</table>
+<table id="table2">
+  <tbody>
+    <tr>
+      <td style="width:115px; font-weight: bold">&nbsp;财务审核人</td>
+      <td style="width:200px">
+          &nbsp;{{ pdfdata.acc_view_input.data }}</td>
+      <td style="width:115px; font-weight: bold">&nbsp;财务审核时间</td>
+      <td style="width:200px">
+          &nbsp;{{ pdfdata.acctime_view_input.data }}</td>
+    </tr>
+    <tr>
+      <td style="width:115px; font-weight: bold">&nbsp;财务审核意见</td>
+      <td colspan="3">
+          <div style="padding-left: 5px; line-height: 24px; min-height: 28px;height: 72px">
+          {{ pdfdata.acccontent_view_input.data }}
+          </div>
+   		  <div style="padding-left: 5px; border-top: 1px solid #000000">
+                 是否有异议：{{ pdfdata.accopinion_view_input.data }}</div></td>
+    </tr>
+  </tbody>
+</table>
+<table id="table2">
+  <tbody>
+    <tr>
+      <td style="width:115px; font-weight: bold">&nbsp;是否批准订立</td>
+      <td style="width:200px">&nbsp;{{ pdfdata.apprvopinion_view_input.data }}</td>
+      <td style="width:115px; font-weight: bold">&nbsp;批准人</td>
+      <td style="width:200px">&nbsp;{{ pdfdata.approver_view_input.data }}</td>
+    </tr>
+    <tr>
+      <td style="width:115px; font-weight: bold">&nbsp;批准授权书</td>
+      <td style="width:200px">&nbsp;{{ pdfdata.auth_view_input.data }}</td>
+      <td style="width:115px; font-weight: bold">&nbsp;批准时间</td>
+      <td style="width:200px">&nbsp;{{ pdfdata.apprvtime_view_input.data }}</td>
+    </tr>
+  </tbody>
+</table>
+<table id="table3">
+  <tbody>
+    <tr>
+      <td style="width:115px; font-weight: bold">&nbsp;二级复核意见</td>
+      <td style="width:200px">&nbsp;[暂缺]</td>
+      <td style="width:115px; font-weight: bold">&nbsp;复核人</td>
+      <td style="width:200px">&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="width:115px; font-weight: bold">&nbsp;批准授权书</td>
+      <td style="width:200px">&nbsp;</td>
+      <td style="width:115px; font-weight: bold">&nbsp;批准时间</td>
+      <td style="width:200px">&nbsp;</td>
+    </tr>
+  </tbody>
+</table>
+</center>
+</div>
+</body>
 </html>
+
