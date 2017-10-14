@@ -14,6 +14,7 @@ table,table tr th, table tr td {
 	width:850px;
 	height: 1150px;
 	border:0px solid #000000;
+    margin-top: 80px;
 }
 #title {
 	width: 850px;
@@ -28,6 +29,7 @@ table,table tr th, table tr td {
 	border-left:2px solid #000000;
 	border-right:2px solid #000000;
 	padding:2px;
+    table-layout:fixed;
 }
 #table2{
 	width: 850px;
@@ -37,6 +39,7 @@ table,table tr th, table tr td {
 	border-left:2px solid #000000;
 	border-right:2px solid #000000;
 	padding:2px;
+    table-layout:fixed;
 }
 #table3{
 	width: 850px;
@@ -47,6 +50,7 @@ table,table tr th, table tr td {
 	border-bottom: 2px solid #000000;
 	border-collapse: collapse; 
 	padding:2px;
+    table-layout:fixed;
 }
 #content1{
     padding-left: 5px;
@@ -54,7 +58,7 @@ table,table tr th, table tr td {
     line-height: 32px;
     min-height: 32px;
     height: 195px;
-    max-width: 735px;
+    width: 677px;
     overflow : hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -67,11 +71,11 @@ table,table tr th, table tr td {
     line-height: 32px;
     min-height: 32px;
     height: 96px;
-    max-width: 735px;
+    width: 677px;
     overflow : hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 6;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
 }
 
@@ -92,23 +96,23 @@ table,table tr th, table tr td {
 <table id="table1">
   <tbody>
     <tr>
-      <td style="width:115px; font-weight: bold">
+      <td style="width:160px; font-weight: bold">
           &nbsp;订立合同部门</td>
-      <td style="width:200px">&nbsp;{{ pdfdata.applydpt_view_input.data }}</td>
-      <td style="width:115px; font-weight: bold">&nbsp;合同业务类型</td>
-      <td style="width:200px">
+      <td style="width:262px">&nbsp;{{ pdfdata.applydpt_view_input.data }}</td>
+      <td style="width:160px; font-weight: bold">&nbsp;合同业务类型</td>
+      <td style="width:262px">
           &nbsp;{{ pdfdata.contracttype_view_input.data }}</td>
     </tr>
     <tr>
-      <td style="width:115px; font-weight: bold">&nbsp;合同提交人</td>
-      <td style="width:200px">
+      <td style="width:160px; font-weight: bold">&nbsp;合同提交人</td>
+      <td style="width:262px">
           &nbsp;{{ pdfdata.applier_view_input.data }}</td>
-      <td style="width:115px; font-weight: bold">&nbsp;合同提交时间</td>
-      <td style="width:200px">
+      <td style="width:160px; font-weight: bold">&nbsp;合同提交时间</td>
+      <td style="width:262px">
           &nbsp;{{ pdfdata.applytime_view_input.data }}</td>
     </tr>
     <tr>
-      <td style="width:115px; font-weight: bold">&nbsp;合同内容</td>
+      <td style="width:160px; font-weight: bold">&nbsp;合同内容</td>
       <td colspan="3"><div id="content1">
             {{ pdfdata.content_view_input.data }}
 	  </td>
@@ -118,15 +122,15 @@ table,table tr th, table tr td {
 <table id="table2">
   <tbody>
     <tr>
-      <td style="width:115px; font-weight: bold">&nbsp;交叉复核人</td>
-      <td style="width:200px">
+      <td style="width:160px; font-weight: bold">&nbsp;交叉复核人</td>
+      <td style="width:262px">
           &nbsp;{{ pdfdata.cvuser_view_input.data }}</td>
-      <td style="width:115px; font-weight: bold">&nbsp;交叉复核时间</td>
-      <td style="width:200px">
+      <td style="width:160px; font-weight: bold">&nbsp;交叉复核时间</td>
+      <td style="width:262px">
           &nbsp;{{ pdfdata.cvtime_view_input.data }}</td>
     </tr>
     <tr>
-      <td style="width:115px; font-weight: bold">&nbsp;交叉复核意见</td>
+      <td style="width:160px; font-weight: bold">&nbsp;交叉复核意见</td>
       <td colspan="3">
           <div id="content2">
           {{ pdfdata.cvcontent_view_input.data }}
@@ -139,15 +143,15 @@ table,table tr th, table tr td {
 <table id="table2">
   <tbody>
     <tr>
-      <td style="width:115px; font-weight: bold">&nbsp;法务审核人</td>
-      <td style="width:200px">
+      <td style="width:160px; font-weight: bold">&nbsp;法务审核人</td>
+      <td style="width:262px">
           &nbsp;{{ pdfdata.lawyer_view_input.data }}</td>
-      <td style="width:115px; font-weight: bold">&nbsp;法务审核时间</td>
-      <td style="width:200px">
+      <td style="width:160px; font-weight: bold">&nbsp;法务审核时间</td>
+      <td style="width:262px">
           &nbsp;{{ pdfdata.lawyertime_view_input.data }}</td>
     </tr>
     <tr>
-      <td style="width:115px; font-weight: bold">&nbsp;法务审核意见</td>
+      <td style="width:160px; font-weight: bold">&nbsp;法务审核意见</td>
       <td colspan="3">
           <div id="content2">
           {{ pdfdata.lawcontent_view_input.data }}
@@ -160,15 +164,15 @@ table,table tr th, table tr td {
 <table id="table2">
   <tbody>
     <tr>
-      <td style="width:115px; font-weight: bold">&nbsp;财务审核人</td>
-      <td style="width:200px">
+      <td style="width:160px; font-weight: bold">&nbsp;财务审核人</td>
+      <td style="width:262px">
           &nbsp;{{ pdfdata.acc_view_input.data }}</td>
-      <td style="width:115px; font-weight: bold">&nbsp;财务审核时间</td>
-      <td style="width:200px">
+      <td style="width:160px; font-weight: bold">&nbsp;财务审核时间</td>
+      <td style="width:262px">
           &nbsp;{{ pdfdata.acctime_view_input.data }}</td>
     </tr>
     <tr>
-      <td style="width:115px; font-weight: bold">&nbsp;财务审核意见</td>
+      <td style="width:160px; font-weight: bold">&nbsp;财务审核意见</td>
       <td colspan="3">
           <div id="content2">
           {{ pdfdata.acccontent_view_input.data }}
@@ -181,42 +185,42 @@ table,table tr th, table tr td {
 <table id="table2">
   <tbody>
     <tr>
-      <td style="width:115px; font-weight: bold">&nbsp;是否批准订立</td>
-      <td style="width:200px">&nbsp;{{ pdfdata.apprvopinion_view_input.data }}</td>
-      <td style="width:115px; font-weight: bold">&nbsp;批准人</td>
-      <td style="width:200px">&nbsp;{{ pdfdata.approver_view_input.data }}</td>
+      <td style="width:160px; font-weight: bold">&nbsp;是否批准订立</td>
+      <td style="width:262px">&nbsp;{{ pdfdata.apprvopinion_view_input.data }}</td>
+      <td style="width:160px; font-weight: bold">&nbsp;批准人</td>
+      <td style="width:262px">&nbsp;{{ pdfdata.approver_view_input.data }}</td>
     </tr>
     <tr>
-      <td style="width:115px; font-weight: bold">&nbsp;批准授权书</td>
-      <td style="width:200px">&nbsp;{{ pdfdata.auth_view_input.data }}</td>
-      <td style="width:115px; font-weight: bold">&nbsp;批准时间</td>
-      <td style="width:200px">&nbsp;{{ pdfdata.apprvtime_view_input.data }}</td>
+      <td style="width:160px; font-weight: bold">&nbsp;批准授权书</td>
+      <td style="width:262px">&nbsp;{{ pdfdata.auth_view_input.data }}</td>
+      <td style="width:160px; font-weight: bold">&nbsp;批准时间</td>
+      <td style="width:262px">&nbsp;{{ pdfdata.apprvtime_view_input.data }}</td>
     </tr>
   </tbody>
 </table>
 <table id="table2">
   <tbody>
     <tr>
-      <td style="width:115px; font-weight: bold">&nbsp;二级复核意见</td>
-      <td style="width:200px">&nbsp;[暂缺]</td>
-      <td style="width:115px; font-weight: bold">&nbsp;复核人</td>
-      <td style="width:200px">&nbsp;</td>
+      <td style="width:160px; font-weight: bold">&nbsp;二级复核意见</td>
+      <td style="width:262px">&nbsp;[暂缺]</td>
+      <td style="width:160px; font-weight: bold">&nbsp;复核人</td>
+      <td style="width:262px">&nbsp;</td>
     </tr>
     <tr>
-      <td style="width:115px; font-weight: bold">&nbsp;批准授权书</td>
-      <td style="width:200px">&nbsp;</td>
-      <td style="width:115px; font-weight: bold">&nbsp;批准时间</td>
-      <td style="width:200px">&nbsp;</td>
+      <td style="width:160px; font-weight: bold">&nbsp;批准授权书</td>
+      <td style="width:262px">&nbsp;</td>
+      <td style="width:160px; font-weight: bold">&nbsp;批准时间</td>
+      <td style="width:262px">&nbsp;</td>
     </tr>
   </tbody>
 </table>
 <table id="table3">
         <tbody>
           <tr>
-            <td style="width:115px; font-weight: bold">&nbsp;盖章人</td>
-            <td style="width:200px">&nbsp;[暂缺]</td>
-            <td style="width:115px; font-weight: bold">&nbsp;盖章时间</td>
-            <td style="width:200px">&nbsp;</td>
+            <td style="width:160px; font-weight: bold">&nbsp;盖章人</td>
+            <td style="width:262px">&nbsp;[暂缺]</td>
+            <td style="width:160px; font-weight: bold">&nbsp;盖章时间</td>
+            <td style="width:262px">&nbsp;</td>
           </tr>
         </tbody>
       </table>
