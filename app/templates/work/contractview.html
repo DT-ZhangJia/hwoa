@@ -18,10 +18,12 @@
     
     <div class="col-md-4">
             {{ wtf.quick_form(contractviewform_disp) }}
+            {% if contractviewform_disp.apprvopinion_view_input.data != "" %}
             <form method="POST">
             {{ viewpdf.hidden_tag() }}
             {{ viewpdf.submit_pdf_btn(class="btn btn-default") }}
             </form>
+            {% endif %}
         <br>
         <br>
     </div>

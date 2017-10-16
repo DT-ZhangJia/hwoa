@@ -144,35 +144,52 @@ def contractview(contractid):
             contractviewform_app.cvcontent_view_input.data = "[系统提示]具有前置流程的申请无需交叉复核。前置流程完整性暂须财务复核确认。" # pylint: disable=C0301
         elif contract.procedure|0b1111111100 == 0b1111111111:
             contractviewform_app.cvcontent_view_input.data = "[系统提示]具有前置流程的申请无需交叉复核。前置流程完整性已经财务复核确认。" # pylint: disable=C0301
+        elif contract.crosscontent is None:
+            contractviewform_app.cvcontent_view_input.data = ""
         else:
             contractviewform_app.cvcontent_view_input.data = contract.crosscontent
         if contract.crossopinion is None:
             contractviewform_app.cvopinion_view_input.data = ""
         else:
             contractviewform_app.cvopinion_view_input.data = {True:"有异议",False:"无异议"}[contract.crossopinion] # pylint: disable=C0301
-        contractviewform_app.cvtime_view_input.data = contract.crosstime
+        if contract.crosstime is None:
+            contractviewform_app.cvtime_view_input.data = ""
+        else:
+            contractviewform_app.cvtime_view_input.data = contract.crosstime
         #lawyer
         if contract.lawyeruid is None:
             contractviewform_app.lawyer_view_input.data = ""
         else:
             contractviewform_app.lawyer_view_input.data = label_dict.all_users_dict[contract.lawyeruid]
-        contractviewform_app.lawcontent_view_input.data = contract.lawyercontent
+        if contract.lawyercontent is None:
+            contractviewform_app.lawcontent_view_input.data = ""
+        else:
+            contractviewform_app.lawcontent_view_input.data = contract.lawyercontent
         if contract.lawyeropinion is None:
             contractviewform_app.lawopinion_view_input.data = ""
         else:
             contractviewform_app.lawopinion_view_input.data = {True:"有异议",False:"无异议"}[contract.lawyeropinion]
-        contractviewform_app.lawyertime_view_input.data = contract.lawyertime
+        if contract.lawyertime is None:
+            contractviewform_app.lawyertime_view_input.data = ""
+        else:
+            contractviewform_app.lawyertime_view_input.data = contract.lawyertime
         #acc
         if contract.accuid is None:
             contractviewform_app.acc_view_input.data = ""
         else:
             contractviewform_app.acc_view_input.data = label_dict.all_users_dict[contract.accuid]
-        contractviewform_app.acccontent_view_input.data = contract.acccontent
+        if contract.acccontent is None:
+            contractviewform_app.acccontent_view_input.data = ""
+        else:
+            contractviewform_app.acccontent_view_input.data = contract.acccontent
         if contract.accopinion is None:
             contractviewform_app.accopinion_view_input.data = ""
         else:
             contractviewform_app.accopinion_view_input.data = {True:"有异议",False:"无异议"}[contract.accopinion]
-        contractviewform_app.acctime_view_input.data = contract.acctime
+        if contract.acctime is None:
+            contractviewform_app.acctime_view_input.data = ""
+        else:
+            contractviewform_app.acctime_view_input.data = contract.acctime
         #incharge
         if contract.authid is None:
             contractviewform_app.auth_view_input.data = ""
@@ -746,13 +763,12 @@ def contractreview():
     #可见一级审批表
     for contract in allcontract:
         if ((contract.procedure&0b0000110011 == 0b0000110011 or contract.procedure&0b0000111100 == 0b0000111100) and #需要审批
-            contract.procedure|0b1110111111==0b1110111111
-            
-            
-            
-            
-            
-            ): #尚未审批
+            contract.procedure|0b1110111111==0b1110111111 and #尚未审批
+            contract.applieruid!=current_user.uid and #当前用户不是申请人
+            contract.crossuid!=current_user.uid and #当前用户不是交叉复核人
+            contract.lawyeruid!=current_user.uid and #当前用户不是法务
+            contract.accuid!=current_user.uid and #当前用户不是财务
+            (([contract.companyid, contract.applydpt] in incharge_list) or contract.companyid in president_list)): 
             dptreview.append(contract)
 
 

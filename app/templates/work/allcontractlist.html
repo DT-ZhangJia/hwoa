@@ -6,17 +6,34 @@
 <div class="container">
     <div>
         <table class="table table-striped">
-            <tread><tr><th>申请时间</th><th>公司</th><th>部门</th><th>内容</th><th style="text-align:right;">金额&nbsp&nbsp&nbsp&nbsp</th><th>申请人</th><th>详情</th></tr></tread>
+            <tread><tr><th>申请时间</th><th>公司</th><th>部门</th><th>内容</th><th style="text-align:right;">金额&nbsp&nbsp&nbsp&nbsp</th><th>申请人</th><th>交叉</th><th>法务</th><th>财务</th><th>审批</th><th>详情</th></tr></tread>
             <tbody>
                 {% for contract in allcontract %}
                 <tr>
                     <td> {{ contract.applytime }} </td>
                     <td> {{ label_dict.all_company_dict[contract.companyid] }} </td>
                     <td> {{ label_dict.all_dpt_dict[contract.applydpt] }} </td>
-                    <td><div style="border:none;overflow:hidden; text-overflow:ellipsis; white-space:nowrap"> {{ contract.content }} </div></td>
+                    <td><div style="border:none; max-width:20em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap"> {{ contract.content }} </div></td>
                     <td min-width=200px nowrap style="text-align:right;"> {{ contract.amount }} </td>
                     <td> {{ label_dict.all_users_dict[contract.applieruid] }} </td>
-                    <td> <a href="{{ url_for('work.contractview', contractid=contract.idcontracts, _external=True) }}">点击查看详情</a> </td>
+                    <td><div style="width:2em">
+                            {% if contract.crossuid is none %}<span style="color:red">未审</span>
+                            {% else %}<span style="color:green">已审</span>
+                            {% endif %}
+                            </div></td>
+                    <td><div style="width:2em">
+                            {% if contract.lawyeruid is none %}<span style="color:red">未审</span>
+                            {% else %}<span style="color:green">已审</span>{% endif %}
+                            </div></td>
+                    <td><div style="width:2em">
+                            {% if contract.accuid is none %}<span style="color:red">未审</span>
+                            {% else %}<span style="color:green">已审</span>{% endif %}
+                            </div></td>
+                    <td><div style="width:2em">
+                            {% if contract.approveruid is none %}<span style="color:red; font-weight:bold">未审</span>
+                            {% else %}<span style="color:green; font-weight:bold">已审</span>{% endif %}
+                            </div></td>
+                    <td> <a href="{{ url_for('work.contractview', contractid=contract.idcontracts, _external=True) }}">查看</a> </td>
                 </tr>
                 {% endfor %}
             </tbody>
