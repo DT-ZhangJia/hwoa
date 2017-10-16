@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Huiwen OA{% endblock %}
+
+{% block page_content %}
+
+<div class="page-header">
+    <h1>合同申请及审核流程</h1>
+</div>
+    
+<div>
+    <ol>
+        <li style="margin:1em">部门为合同申请的主体，由"订立合同部门"的部门负责人批复合同是否可以订立。</li>
+        <li style="margin:1em">合同内容需经交叉复核人、法务、财务三方发表最终意见后才能流转到部门负责人。</li>
+        <li style="margin:1em">提交合同申请后，申请人需将合同文本交上述三方审核。</li>
+        <li style="margin:1em">三方不再有修改意见后，分别在表单中提交复核意见。</li>
+        <li style="margin:1em">部门长参考三方意见后对合同是否可订立做出批复。</li>
+    </ol>
+</div>
+
+{% endblock %}

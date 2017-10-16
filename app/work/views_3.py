@@ -808,3 +808,10 @@ def contractreview():
                            cvreview=cvreview, lawreview=lawreview, accreview=accreview,
                            label_dict=label_dict)
 
+
+@work.route('/contractrules')
+@login_required
+def contractrules():
+    """合同申请流程说明"""
+
+    return render_template('work/contractrules.html')
