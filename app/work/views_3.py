@@ -58,32 +58,15 @@ def contractapply():
         for user in incharge:
             inchargelist.append(user.puid)
 
-        #如果业务金额超过本部门部门长权限，申请人又不是部门长的话就无法提交。
-        if eval("dptoplimit."+opcode) < float(contractapply_app.amount_apply_input.data) and \
-            current_user.uid not in inchargelist:
-            flash('您无法申请超限额合同，请让本部门负责人提交申请。')
-        #如果业务金额未超过本部门部门长权限，申请人又是部门长的话就无法提交。
-        elif eval("dptoplimit."+opcode) >= float(contractapply_app.amount_apply_input.data) and \
-            current_user.uid in inchargelist:
-            flash('您作为本部门负责人，不可自行提交申请。')
-        else:
-            newcontract = Contracts(companyid=contractapply_app.company_apply_input.data,
-                                    applieruid=current_user.uid,
-                                    applydpt=contractapply_app.applydpt_apply_input.data,
-                                    applytime=datetime.now(tz),
-                                    opcode=operation.opcode,
-                                    content=contractapply_app.content_apply_input.data,
-                                    amount=contractapply_app.amount_apply_input.data)
-            #提交时根据是否为原辅料或者固定资产采购合同决定是否需要交叉复核
-            if int(contractapply_app.contracttype_apply_input.data) in [5, 8]:
-                newcontract = Contracts(companyid=contractapply_app.company_apply_input.data,
-                                        applieruid=current_user.uid,
-                                        applydpt=contractapply_app.applydpt_apply_input.data,
-                                        applytime=datetime.now(tz),
-                                        opcode=operation.opcode,
-                                        content=contractapply_app.content_apply_input.data,
-                                        amount=contractapply_app.amount_apply_input.data,
-                                        procedure=0b1)
+        if dptoplimit is not None:
+            #如果业务金额超过本部门部门长权限，申请人又不是部门长的话就无法提交。
+            if eval("dptoplimit."+opcode) < float(contractapply_app.amount_apply_input.data) and \
+                current_user.uid not in inchargelist:
+                flash('您无法申请超限额合同，请让本部门负责人提交申请。')
+            #如果业务金额未超过本部门部门长权限，申请人又是部门长的话就无法提交。
+            elif eval("dptoplimit."+opcode) >= float(contractapply_app.amount_apply_input.data) and \
+                current_user.uid in inchargelist:
+                flash('您作为本部门负责人，不可自行提交申请。')
             else:
                 newcontract = Contracts(companyid=contractapply_app.company_apply_input.data,
                                         applieruid=current_user.uid,
@@ -91,12 +74,32 @@ def contractapply():
                                         applytime=datetime.now(tz),
                                         opcode=operation.opcode,
                                         content=contractapply_app.content_apply_input.data,
-                                        amount=contractapply_app.amount_apply_input.data,
-                                        procedure=0b100)
-            mydb.session.add(newcontract)# pylint: disable=no-member
-            mydb.session.commit()# pylint: disable=no-member
-            #flash('提交成功。')
+                                        amount=contractapply_app.amount_apply_input.data)
+                #提交时根据是否为原辅料或者固定资产采购合同决定是否需要交叉复核
+                if int(contractapply_app.contracttype_apply_input.data) in [5, 8]:
+                    newcontract = Contracts(companyid=contractapply_app.company_apply_input.data,
+                                            applieruid=current_user.uid,
+                                            applydpt=contractapply_app.applydpt_apply_input.data,
+                                            applytime=datetime.now(tz),
+                                            opcode=operation.opcode,
+                                            content=contractapply_app.content_apply_input.data,
+                                            amount=contractapply_app.amount_apply_input.data,
+                                            procedure=0b1)
+                else:
+                    newcontract = Contracts(companyid=contractapply_app.company_apply_input.data,
+                                            applieruid=current_user.uid,
+                                            applydpt=contractapply_app.applydpt_apply_input.data,
+                                            applytime=datetime.now(tz),
+                                            opcode=operation.opcode,
+                                            content=contractapply_app.content_apply_input.data,
+                                            amount=contractapply_app.amount_apply_input.data,
+                                            procedure=0b100)
+                mydb.session.add(newcontract)# pylint: disable=no-member
+                mydb.session.commit()# pylint: disable=no-member
+                #flash('提交成功。')
             return redirect(url_for('work.allcontractlist'))
+        else:
+            flash('本部门尚未设置部门负责人，暂不可提交申请。')
 
 
     return render_template('work/contractapply.html', contractapply_display=contractapply_app)
