@@ -82,6 +82,9 @@ class Permissions(mydb.Model):
     apprv100015 = mydb.Column(mydb.Float)
     apprv100016 = mydb.Column(mydb.Float)
     apprv100017 = mydb.Column(mydb.Float)
+    apprv100018 = mydb.Column(mydb.Float)
+    apprv100019 = mydb.Column(mydb.Float)
+
 
     def __repr__(self):
         return '<Permissions %r>' % self.idpermission
@@ -277,7 +280,7 @@ class Assets(mydb.Model):
     idassets = mydb.Column(mydb.Integer, primary_key=True)
     syscode = mydb.Column(mydb.Integer)
     companyid = mydb.Column(mydb.Integer)
-    
+
 
 
     def __repr__(self):
