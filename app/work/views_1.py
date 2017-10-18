@@ -311,8 +311,8 @@ def addpermission():
                                         apprv100015=apprv100015_data,
                                         apprv100016=apprv100016_data,
                                         apprv100017=apprv100017_data,
-                                        apprv100017=apprv100018_data,
-                                        apprv100017=apprv100019_data)
+                                        apprv100018=apprv100018_data,
+                                        apprv100019=apprv100019_data)
 
             if current_user.uid == 1: #董事长创建的记录都自动生效
                 newpermission.approved=True
