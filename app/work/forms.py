@@ -189,7 +189,7 @@ class ContractApplyForm(FlaskForm):
         op_choices = [("", "---")]
         contractop = Operations.query.all()
         for op in contractop:
-            if op.idoperations < 18:
+            if op.idoperations < 20:
                 op_choices.append((str(op.idoperations),op.opname))
         self.contracttype_apply_input.choices = op_choices
 
