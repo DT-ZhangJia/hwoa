@@ -90,6 +90,8 @@ class AddPermissionForm(FlaskForm):
     apprv100015_addpm_input = StringField('15. 批准投资合同金额', default='0.00', validators=[Required(), Length(1, 20), Regexp('^[0-9]+(.[0-9]{2})?$', 0, '使用金额格式，例：1234.56')])  # pylint: disable=C0301
     apprv100016_addpm_input = StringField('16. 批准出售资产合同金额', default='0.00', validators=[Required(), Length(1, 20), Regexp('^[0-9]+(.[0-9]{2})?$', 0, '使用金额格式，例：1234.56')])  # pylint: disable=C0301
     apprv100017_addpm_input = StringField('17. 批准专利转让或许可合同金额', default='0.00', validators=[Required(), Length(1, 20), Regexp('^[0-9]+(.[0-9]{2})?$', 0, '使用金额格式，例：1234.56')])  # pylint: disable=C0301
+    apprv100018_addpm_input = StringField('18. 批准其他采购框架合同合同金额', default='0.00', validators=[Required(), Length(1, 20), Regexp('^[0-9]+(.[0-9]{2})?$', 0, '使用金额格式，例：1234.56')])  # pylint: disable=C0301
+    apprv100019_addpm_input = StringField('19. 批准其他采购订单合同金额', default='0.00', validators=[Required(), Length(1, 20), Regexp('^[0-9]+(.[0-9]{2})?$', 0, '使用金额格式，例：1234.56')])  # pylint: disable=C0301
     submit_addpm_btn = SubmitField('提交')
 
     def __init__(self, *args, **kwargs):
@@ -153,6 +155,8 @@ class Permissiondetail(FlaskForm):
     apprv100015_pmdt_input = StringField('15. 批准投资合同金额', render_kw={'readonly': True})
     apprv100016_pmdt_input = StringField('16. 批准出售资产合同金额', render_kw={'readonly': True})
     apprv100017_pmdt_input = StringField('17. 批准专利转让或许可合同金额', render_kw={'readonly': True})
+    apprv100018_pmdt_input = StringField('18. 批准其他采购框架合同合同金额', render_kw={'readonly': True})  # pylint: disable=C0301
+    apprv100019_pmdt_input = StringField('19. 批准其他采购订单合同金额', render_kw={'readonly': True}) # pylint: disable=C0301
 
 
 

@@ -50,6 +50,8 @@ def addpermission():
         defaultinput.append(str(mypermit.apprv100015))
         defaultinput.append(str(mypermit.apprv100016))
         defaultinput.append(str(mypermit.apprv100017))
+        defaultinput.append(str(mypermit.apprv100018))
+        defaultinput.append(str(mypermit.apprv100019))
         addpermissionform_app = AddPermissionForm(apprv100001_addpm_input=defaultinput[1],
                                                   apprv100002_addpm_input=defaultinput[2],
                                                   apprv100003_addpm_input=defaultinput[3],
@@ -66,7 +68,9 @@ def addpermission():
                                                   apprv100014_addpm_input=defaultinput[14],
                                                   apprv100015_addpm_input=defaultinput[15],
                                                   apprv100016_addpm_input=defaultinput[16],
-                                                  apprv100017_addpm_input=defaultinput[17])
+                                                  apprv100017_addpm_input=defaultinput[17],
+                                                  apprv100016_addpm_input=defaultinput[18],
+                                                  apprv100017_addpm_input=defaultinput[19])
     else:
         flash('您无法进行授权。')
         return redirect(url_for('work.addrules'))
@@ -101,6 +105,8 @@ def addpermission():
     apprv100015_data = 0.0
     apprv100016_data = 0.0
     apprv100017_data = 0.0
+    apprv100018_data = 0.0
+    apprv100019_data = 0.0
     #提交表单写入数据库
     addnewpower = False #创建权限的开关
     if addpermissionform_app.validate_on_submit():
@@ -266,6 +272,18 @@ def addpermission():
             else:
                 apprv100017_data = float(addpermissionform_app.apprv100017_addpm_input.data)
 
+            if float(addpermissionform_app.apprv100018_addpm_input.data) > permit.apprv100018:
+                apprv100018_data = permit.apprv100018
+            else:
+                apprv100018_data = float(addpermissionform_app.apprv100018_addpm_input.data)
+
+            if float(addpermissionform_app.apprv100019_addpm_input.data) > permit.apprv100019:
+                apprv100019_data = permit.apprv100019
+            else:
+                apprv100019_data = float(addpermissionform_app.apprv100019_addpm_input.data)
+
+
+
             newpermission = Permissions(companyid=addpermissionform_app.company_addpm_input.data,
                                         positionid=addpermissionform_app.position_addpm_input.data,
                                         puid=addpermissionform_app.user_addpm_input.data,
@@ -292,7 +310,9 @@ def addpermission():
                                         apprv100014=apprv100014_data,
                                         apprv100015=apprv100015_data,
                                         apprv100016=apprv100016_data,
-                                        apprv100017=apprv100017_data)
+                                        apprv100017=apprv100017_data,
+                                        apprv100017=apprv100018_data,
+                                        apprv100017=apprv100019_data)
 
             if current_user.uid == 1: #董事长创建的记录都自动生效
                 newpermission.approved=True
@@ -401,6 +421,9 @@ def permissiondetail(pmid):
         permissiondetail_app.apprv100015_pmdt_input.data = permissiondetail_query.apprv100015
         permissiondetail_app.apprv100016_pmdt_input.data = permissiondetail_query.apprv100016
         permissiondetail_app.apprv100017_pmdt_input.data = permissiondetail_query.apprv100017
+        permissiondetail_app.apprv100018_pmdt_input.data = permissiondetail_query.apprv100018
+        permissiondetail_app.apprv100019_pmdt_input.data = permissiondetail_query.apprv100019
+
 
         return render_template('work/permissiondetail.html', permissiondetail_disp=permissiondetail_app)
 
