@@ -69,8 +69,8 @@ def addpermission():
                                                   apprv100015_addpm_input=defaultinput[15],
                                                   apprv100016_addpm_input=defaultinput[16],
                                                   apprv100017_addpm_input=defaultinput[17],
-                                                  apprv100016_addpm_input=defaultinput[18],
-                                                  apprv100017_addpm_input=defaultinput[19])
+                                                  apprv100018_addpm_input=defaultinput[18],
+                                                  apprv100019_addpm_input=defaultinput[19])
     else:
         flash('您无法进行授权。')
         return redirect(url_for('work.addrules'))
