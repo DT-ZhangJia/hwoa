@@ -64,7 +64,7 @@ def contractapply():
                 current_user.uid not in inchargelist:
                 flash('您无法申请超限额合同，请让本部门负责人提交申请。')
             #如果业务金额未超过本部门部门长权限，申请人又是部门长的话就无法提交。
-            elif eval("dptoplimit."+opcode) >= float(contractapply_app.amount_apply_input.data) and \
+            elif eval("dptoplimit."+opcode) >= float(contractapply_app.amount_apply_input.data) and\
                 current_user.uid in inchargelist:
                 flash('您作为本部门负责人，不可自行提交申请。')
             else:

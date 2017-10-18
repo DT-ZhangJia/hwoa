@@ -268,3 +268,17 @@ class User(UserMixin, mydb.Model):
 def load_user(user_id):
     """用户存在性回调函数"""
     return User.query.get(int(user_id)) #这个回调函数难以理解，参见pocket内记载
+
+
+
+class Assets(mydb.Model):
+    """固定资产记录"""
+    __tablename__ = 'assets'
+    idassets = mydb.Column(mydb.Integer, primary_key=True)
+    syscode = mydb.Column(mydb.Integer)
+    companyid = mydb.Column(mydb.Integer)
+    
+
+
+    def __repr__(self):
+        return '<Assets %r>' % self.idassets
