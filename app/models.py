@@ -167,6 +167,7 @@ class Contracts(mydb.Model):
     originalcontractid = mydb.Column(mydb.Integer)
     stopcontractid = mydb.Column(mydb.Integer)
     updatecontractid = mydb.Column(mydb.Integer)
+    deleted = mydb.Column(mydb.Boolean)
 
 
     def __repr__(self):
@@ -279,6 +280,8 @@ class Assets(mydb.Model):
     __tablename__ = 'assets'
     idassets = mydb.Column(mydb.Integer, primary_key=True)
     syscode = mydb.Column(mydb.Integer)
+    subcode = mydb.Column(mydb.Integer)
+    
     companyid = mydb.Column(mydb.Integer)
 
 

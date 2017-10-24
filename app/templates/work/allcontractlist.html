@@ -9,6 +9,8 @@
             <tread><tr><th>申请时间</th><th>公司</th><th>部门</th><th>内容</th><th style="text-align:right;">金额&nbsp&nbsp&nbsp&nbsp</th><th>申请人</th><th>交叉</th><th>法务</th><th>财务</th><th>审批</th><th>详情</th></tr></tread>
             <tbody>
                 {% for contract in allcontract %}
+                {% if contract.deleted==True %}
+                {% else %}
                 <tr>
                     <td> {{ contract.applytime }} </td>
                     <td> {{ label_dict.all_company_dict[contract.companyid] }} </td>
@@ -35,6 +37,7 @@
                             </div></td>
                     <td> <a href="{{ url_for('work.contractview', contractid=contract.idcontracts, _external=True) }}">查看</a> </td>
                 </tr>
+                {% endif %}
                 {% endfor %}
             </tbody>
         </table>
