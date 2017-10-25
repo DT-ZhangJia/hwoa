@@ -15,7 +15,7 @@
                     <td> {{ contract.applytime }} </td>
                     <td> {{ label_dict.all_company_dict[contract.companyid] }} </td>
                     <td> {{ label_dict.all_dpt_dict[contract.applydpt] }} </td>
-                    <td><div style="border:none;overflow:hidden; text-overflow:ellipsis; white-space:nowrap"> {{ contract.content }} </div></td>
+                    <td><div style="border:none; max-width:20em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap"> {{ contract.content }} </div></td>
                     <td min-width=200px nowrap style="text-align:right;"> {{ contract.amount }} </td>
                     <td> {{ label_dict.all_users_dict[contract.applieruid] }} </td>
                     <td> <a href="{{ url_for('work.contractondpt', contractid=contract.idcontracts, _external=True) }}">待批准订立</a> </td>
@@ -30,7 +30,7 @@
                     <td> {{ contract.applytime }} </td>
                     <td> {{ label_dict.all_company_dict[contract.companyid] }} </td>
                     <td> {{ label_dict.all_dpt_dict[contract.applydpt] }} </td>
-                    <td><div style="border:none;overflow:hidden; text-overflow:ellipsis; white-space:nowrap"> {{ contract.content }} </div></td>
+                    <td><div style="border:none; max-width:20em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap"> {{ contract.content }} </div></td>
                     <td min-width=200px nowrap style="text-align:right;"> {{ contract.amount }} </td>
                     <td> {{ label_dict.all_users_dict[contract.applieruid] }} </td>
                     <td> <a href="{{ url_for('work.contractoncv', contractid=contract.idcontracts, _external=True) }}">待交叉复核</a> </td>
@@ -46,7 +46,7 @@
                     <td> {{ contract.applytime }} </td>
                     <td> {{ label_dict.all_company_dict[contract.companyid] }} </td>
                     <td> {{ label_dict.all_dpt_dict[contract.applydpt] }} </td>
-                    <td><div style="border:none;overflow:hidden; text-overflow:ellipsis; white-space:nowrap"> {{ contract.content }} </div></td>
+                    <td><div style="border:none; max-width:20em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap"> {{ contract.content }} </div></td>
                     <td min-width=200px nowrap style="text-align:right;"> {{ contract.amount }} </td>
                     <td> {{ label_dict.all_users_dict[contract.applieruid] }} </td>
                     <td> <a href="{{ url_for('work.contractonlaw', contractid=contract.idcontracts, _external=True) }}">待法务复核</a> </td>
@@ -63,7 +63,7 @@
                     <td> {{ contract.applytime }} </td>
                     <td> {{ label_dict.all_company_dict[contract.companyid] }} </td>
                     <td> {{ label_dict.all_dpt_dict[contract.applydpt] }} </td>
-                    <td><div style="border:none;overflow:hidden; text-overflow:ellipsis; white-space:nowrap"> {{ contract.content }} </div></td>
+                    <td><div style="border:none; max-width:20em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap"> {{ contract.content }} </div></td>
                     <td min-width=200px nowrap style="text-align:right;"> {{ contract.amount }} </td>
                     <td> {{ label_dict.all_users_dict[contract.applieruid] }} </td>
                     <td> <a href="{{ url_for('work.contractonacc', contractid=contract.idcontracts, _external=True) }}">待财务复核</a> </td>
