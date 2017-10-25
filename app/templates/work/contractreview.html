@@ -11,6 +11,8 @@
             <tbody>
                 {% if dptreview != None %}
                 {% for contract in dptreview %}
+                {% if contract.deleted==True %}
+                {% else %}
                 <tr>
                     <td> {{ contract.applytime }} </td>
                     <td> {{ label_dict.all_company_dict[contract.companyid] }} </td>
@@ -20,6 +22,7 @@
                     <td> {{ label_dict.all_users_dict[contract.applieruid] }} </td>
                     <td> <a href="{{ url_for('work.contractondpt', contractid=contract.idcontracts, _external=True) }}">待批准订立</a> </td>
                 </tr>
+                {% endif %}
                 {% endfor %}
                 <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
                 {% endif %}
@@ -42,6 +45,8 @@
 
                 {% if lawreview != None %}
                 {% for contract in lawreview %}
+                {% if contract.deleted==True %}
+                {% else %}
                 <tr>
                     <td> {{ contract.applytime }} </td>
                     <td> {{ label_dict.all_company_dict[contract.companyid] }} </td>
@@ -51,6 +56,7 @@
                     <td> {{ label_dict.all_users_dict[contract.applieruid] }} </td>
                     <td> <a href="{{ url_for('work.contractonlaw', contractid=contract.idcontracts, _external=True) }}">待法务复核</a> </td>
                 </tr>
+                {% endif %}
                 {% endfor %}
                 <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
                 {% endif %}
@@ -59,6 +65,8 @@
                 
                 {% if accreview != None %}
                 {% for contract in accreview %}
+                {% if contract.deleted==True %}
+                {% else %}
                 <tr>
                     <td> {{ contract.applytime }} </td>
                     <td> {{ label_dict.all_company_dict[contract.companyid] }} </td>
@@ -68,6 +76,7 @@
                     <td> {{ label_dict.all_users_dict[contract.applieruid] }} </td>
                     <td> <a href="{{ url_for('work.contractonacc', contractid=contract.idcontracts, _external=True) }}">待财务复核</a> </td>
                 </tr>
+                {% endif %}
                 {% endfor %}
                 {% endif %}
             </tbody>
