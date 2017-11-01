@@ -3,7 +3,7 @@
 """
 # pylint: disable=invalid-name, too-few-public-methods
 from datetime import datetime
-from flask import render_template, redirect, url_for, flash, make_response
+from flask import render_template, redirect, url_for, flash, make_response, request
 from flask_login import login_required, current_user
 from flask_moment import Moment
 import pytz
@@ -110,11 +110,18 @@ def contractapply():
 def allcontractlist():
     """全部合同列表"""
 
-    allcontract = Contracts.query.order_by(Contracts.applytime.desc()).all()
+    #allcontract = Contracts.query.order_by(Contracts.applytime.desc()).all()
+    page = request.args.get('page', 1, type=int)
+    contract_pagination = Contracts.query.order_by(Contracts.applytime.desc()).paginate(
+        page, per_page=20,
+        error_out=False)
+    contracts = contract_pagination.items
     label_dict = LabelDict()
 
-    return render_template('work/allcontractlist.html',
-                           allcontract=allcontract, label_dict=label_dict)
+    return render_template('work/allcontractlist.html', 
+                           #allcontract=allcontract, 
+                           label_dict=label_dict,
+                           contract_pagination=contract_pagination, contracts_disp=contracts)
 
 
 

@@ -341,3 +341,9 @@ class ViewPDF(FlaskForm):
     """提交合同部门批复表单"""
     blank = StringField('label', render_kw={'readonly': True})
     submit_pdf_btn = SubmitField('生成PDF')
+
+class DepreciationCalc(FlaskForm):
+    """期间折旧计算"""
+    startdate_dep_input = DateField('统计开始日期', validators=[Required()], format='%Y-%m-%d')
+    enddate_dep_input = DateField('统计结束日期', validators=[Required()], format='%Y-%m-%d')
+    submit_dep_btn = SubmitField('计算期间折旧')
