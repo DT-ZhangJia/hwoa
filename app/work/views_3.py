@@ -110,19 +110,37 @@ def contractapply():
 def allcontractlist():
     """全部合同列表"""
 
+    #可视化条件
+    cdlist = []
+    incharges = Permissions.query.filter(Permissions.puid == current_user.uid).all()
+    for incharge in incharges:
+        if incharge.positionid == 2:
+            for i in range(4, 13):
+                cdlist.append([incharge.companyid, i])
+        cdlist.append([incharge.companyid, incharge.positionid])
+
+    lawyers = Lawyers.query.filter(Lawyers.consultantuid == current_user.uid).all()
+    for lawyer in lawyers:
+        for i in range(4, 13):
+            cdlist.append([lawyer.companyid, i])
+
+    crossvalids = Crossvalids.query.filter(Crossvalids.crossuid == current_user.uid).all()
+    for crossvalid in crossvalids:
+        cdlist.append([crossvalid.companyid, crossvalid.crossdpt])
+
+    #集成条件变量
+    cdconditions = (and_(Contracts.companyid == cd[0], Contracts.applydpt == cd[1]) for cd in cdlist) # pylint: disable=C0301
+
     #allcontract = Contracts.query.order_by(Contracts.applytime.desc()).all()
     page = request.args.get('page', 1, type=int)
-    contract_pagination = Contracts.query.order_by(Contracts.applytime.desc()).paginate(
-        page, per_page=20,
-        error_out=False)
+    contract_pagination = Contracts.query.filter(or_(*cdconditions, Contracts.applieruid == current_user.uid)).order_by(Contracts.applytime.desc()).paginate(page, per_page=20, error_out=False) # pylint: disable=C0301
     contracts = contract_pagination.items
     label_dict = LabelDict()
 
-    return render_template('work/allcontractlist.html', 
-                           #allcontract=allcontract, 
+    return render_template('work/allcontractlist.html',
+                           #allcontract=allcontract,
                            label_dict=label_dict,
                            contract_pagination=contract_pagination, contracts_disp=contracts)
-
 
 
 @work.route('/contractview/<contractid>', methods=['GET', 'POST'])
