@@ -128,6 +128,11 @@ def allcontractlist():
     for crossvalid in crossvalids:
         cdlist.append([crossvalid.companyid, crossvalid.crossdpt])
 
+    stampers = Lawyers.query.filter(Lawyers.consultantuid == current_user.uid).all()
+    for stamper in stampers:
+        for i in range(4, 13):
+            cdlist.append([stamper.companyid, i])
+
     #集成条件变量
     cdconditions = (and_(Contracts.companyid == cd[0], Contracts.applydpt == cd[1]) for cd in cdlist) # pylint: disable=C0301
 

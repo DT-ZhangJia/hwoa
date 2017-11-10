@@ -22,7 +22,7 @@ def monthgap(date1, date2):
 def depreciationcalc():
     """期间折旧计算"""
 
-    """
+
     depreciationcalc_app = DepreciationCalc()
 
     label_dict = LabelDict()
@@ -46,14 +46,15 @@ def depreciationcalc():
         depresult = {}
         for i in range(1, 4):#公司
             depresult[i] = {}
-            for j in range(1, 16):#部门
+            for j in range(1, 16):#自设部门包含在建工程项目
                 depresult[i][j] = {1:0, 2:0, 3:0, 4:0, 5:0}#类别
 
         #计算每个记录的折旧值并加到字典内
         for asset in all_dep:
             if asset.termstart < depreciationcalc_app.startdate_dep_input.data:
                 if asset.termend < depreciationcalc_app.enddate_dep_input.data:
-                    start_dep = min((monthgap(depreciationcalc_app.startdate_dep_input.data, asset.termstart) * asset.monthdep + asset.syswithdep),(asset.originvalue - asset.netsalvage))
+                    #需要知道
+                    dep = min(((monthgap(depreciationcalc_app.startdate_dep_input.data, asset.termstart)+1) * asset.monthdep + asset.syswithdep),(asset.originvalue - asset.netsalvage))
                     
                     asset_dep = 0
             asset_dep = 1
@@ -65,6 +66,6 @@ def depreciationcalc():
                                account_dict=account_dict, class_dict=class_dict,
                                depreciationcalc_start=depreciationcalc_app.startdate_dep_input,
                                depreciationcalc_end=depreciationcalc_app.enddate_dep_input)
-    """
-    
+
+
     return render_template('work/depcalcform.html', depreciationcalc_dsp=depreciationcalc_app)

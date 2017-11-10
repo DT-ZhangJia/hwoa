@@ -24,13 +24,14 @@
 <div style="font-weight:bold; margin:1em">法务财务复核人一览</div>
 <div>
     <table class="table table-striped">
-        <tread><tr><th>公司</th><th>法务复核人</th><th>财务复核人</th></tr></tread>
+        <tread><tr><th>公司</th><th>法务复核人</th><th>财务复核人</th><th>盖章人</th></tr></tread>
         <tbody>
             {% for key, value in lawyer_dict.items() %}
                 <tr>
                     <td>{{ label_dict.all_company_dict[key] }}</td>
                     <td>{% for name3 in value[0] %}{{ label_dict.all_users_dict[name3] }} &nbsp&nbsp {% endfor %}</td>
                     <td>{% for name4 in value[1] %}{{ label_dict.all_users_dict[name4] }} &nbsp&nbsp {% endfor %}</td>
+                    <td>{% for name5 in value[2] %}{{ label_dict.all_users_dict[name5] }} &nbsp&nbsp {% endfor %}</td>
                 </tr>
             {% endfor %}
         </tbody>

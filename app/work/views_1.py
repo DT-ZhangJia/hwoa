@@ -474,9 +474,11 @@ def addrules():
     lawyer_dict = {}
     lawuidlist = []
     accuidlist = []
+    stamperuidlist = []
     for key, _ in label_dict.all_company_dict.items():
         lawuidlist = [lawyer.consultantuid for lawyer in lawyers if lawyer.companyid==key and lawyer.consultant==1]
         accuidlist = [acc.consultantuid for acc in lawyers if acc.companyid==key and acc.consultant==2]
-        lawyer_dict[key] = [lawuidlist,accuidlist]
+        stamperuidlist = [stamper.consultantuid for stamper in lawyers if stamper.companyid==key and stamper.consultant==3]
+        lawyer_dict[key] = [lawuidlist, accuidlist, stamperuidlist]
 
     return render_template('work/addrules.html', label_dict=label_dict, rule_dict=rule_dict, lawyer_dict=lawyer_dict)
