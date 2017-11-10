@@ -153,12 +153,44 @@ def allcontractlist():
 def contractview(contractid):
     """合同审批详情页面"""
 
+
     contractviewform_app = ContractViewForm()
     label_dict = LabelDict()
     contract = Contracts.query.filter_by(idcontracts=contractid).first()
     operation = Operations.query.filter_by(opcode=contract.opcode).first()# pylint: disable=C0301
 
     if contract is not None:
+
+
+        #可视化条件
+        cdlist = []
+        incharges = Permissions.query.filter(Permissions.puid == current_user.uid).all()
+        for incharge in incharges:
+            if incharge.positionid == 2:
+                for i in range(4, 13):
+                    cdlist.append([incharge.companyid, i])
+            cdlist.append([incharge.companyid, incharge.positionid])
+
+        lawyers = Lawyers.query.filter(Lawyers.consultantuid == current_user.uid).all()
+        for lawyer in lawyers:
+            for i in range(4, 13):
+                cdlist.append([lawyer.companyid, i])
+
+        crossvalids = Crossvalids.query.filter(Crossvalids.crossuid == current_user.uid).all()
+        for crossvalid in crossvalids:
+            cdlist.append([crossvalid.companyid, crossvalid.crossdpt])
+
+        stampers = Lawyers.query.filter(Lawyers.consultantuid == current_user.uid).all()
+        for stamper in stampers:
+            for i in range(4, 13):
+                cdlist.append([stamper.companyid, i])
+
+
+        #无权限回弹列表页面
+        if not([contract.companyid, contract.applydpt] in cdlist or contract.applieruid == current_user.uid):
+            flash("您没有查看本申请的权限。")
+            return redirect(url_for('work.allcontractlist'))
+
 
         #填充数据
         contractviewform_app.company_view_input.data = label_dict.all_company_dict[contract.companyid] # pylint: disable=C0301
