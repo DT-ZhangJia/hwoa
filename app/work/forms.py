@@ -342,8 +342,15 @@ class ViewPDF(FlaskForm):
     blank = StringField('label', render_kw={'readonly': True})
     submit_pdf_btn = SubmitField('生成PDF')
 
+
 class DepreciationCalc(FlaskForm):
     """期间折旧计算"""
     startdate_dep_input = DateField('统计开始日期', validators=[Required()], format='%Y-%m-%d')
     enddate_dep_input = DateField('统计结束日期', validators=[Required()], format='%Y-%m-%d')
     submit_dep_btn = SubmitField('计算期间折旧')
+
+
+class Assetslist(FlaskForm):
+    """时点资产清单"""
+    listdate_al_input = DateField('统计时点日期', validators=[Required()], format='%Y-%m-%d')
+    submit_al_btn = SubmitField('统计时点资产')

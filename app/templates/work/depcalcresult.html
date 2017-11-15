@@ -12,12 +12,12 @@
 </div>
 
 <div class="container">
-    <div>起始计算日期：{{ depreciationcalc_start.data }}</div>
-    <div>结束计算日期：{{ depreciationcalc_end.data }}</div>
+    <div>起始计算日期：{{ depreciationcalc_start }}</div>
+    <div>结束计算日期：{{ depreciationcalc_end }}</div>
     <div>&nbsp;</div>
     <div>
         <table class="table table-striped">
-            <tread><tr><th>公司</th><th>部门</th><th>会计科目</th><th>资产分类</th><th style="text-align:right;">原值(计提折旧)</th></tr></tread>
+            <tread><tr><th>公司</th><th>部门</th><th>会计科目</th><th>资产分类</th><th style="text-align:right;">期间折旧</th></tr></tread>
             <tbody>
             {% for asset in all_dep_disp %}
                 <tr>
@@ -25,7 +25,7 @@
                     <td>{{ label_dict.all_dpt_dict[asset.dptid] }}</td>
                     <td>{{ account_dict[asset.accountid] }}</td>
                     <td>{{ class_dict[asset.classid] }}</td>
-                    <td style="text-align:right;">{{ asset.originvalue }}</td>
+                    <td style="text-align:right;">{{ depresult_disp[asset.companyid][asset.dptid][asset.classid] }}</td>
                 </tr>
             {% endfor %}
             </tbody>

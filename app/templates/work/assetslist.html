@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Huiwen OA - 固定资产清单{% endblock %}
+
+
+
+{% block page_content %}
+
+<div class="page-header">
+    <h1>固定资产清单</h1>
+</div>
+
+<div class="container">
+    <div>统计时点日期：{{ listdate }}</div>
+    <div>&nbsp;</div>
+    <div>
+        <table class="table table-striped">
+            <tread>
+                <tr>
+                    <th>资产编号</th>
+                    <th>资产名称</th>
+                    <th style="text-align:right;">原值</th>
+                    <th style="text-align:right;">累计折旧</th>
+                </tr>
+            </tread>
+            <tbody>
+            {% for asset,dep in assets_ondate_dict.items() %}
+                <tr>
+                    <td>{{ asset.syscode }}</td>
+                    <td>{{ asset.assetname }}</td>
+                    <td style="text-align:right;">{{ asset.originvalue }}</td>
+                    <td style="text-align:right;">{{ dep }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

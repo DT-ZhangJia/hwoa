@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Huiwen OA - 固定资产清单{% endblock %}
+
+
+
+{% block page_content %}
+
+<div class="page-header">
+    <h1>固定资产清单</h1>
+</div>
+
+<div class="col-md-4">
+    {{ wtf.quick_form(assetslist_dsp) }}
+</div>
+
+{% endblock %}

@@ -52,6 +52,16 @@
                     </ul>
                 </li>
                 {% endif %}
+                {% if current_user.is_authenticated and current_user.uid in [5,7] %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">固定资产 <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('work.assetslist') }}">时点清单</a></li>
+                        <li><a href="{{ url_for('work.depreciationcalc') }}">期间折旧</a></li>
+                        <li><a href="#">增减变动</a></li>
+                    </ul>
+                </li>
+                {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.is_authenticated %}
