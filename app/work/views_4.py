@@ -108,27 +108,30 @@ def assetslist():
         assets_ondate = Assets.query.filter(and_(Assets.termstart <= assetslist_app.listdate_al_input.data, #pylint: disable=C0301
                                                  or_(Assets.termend == None, #pylint: disable=C0121
                                                      Assets.termend >= assetslist_app.listdate_al_input.data))).all() #pylint: disable=C0301
+        #查找所有子状态（可能）
+        assets_allsub = Assets.query.filter(Assets.termstart <= assetslist_app.listdate_al_input.data).all() #pylint: disable=C0301
+        #将符合的子状态折旧额加入时点资产字典
         for asset in assets_ondate:
-            substatus = Assets.query.filter(and_(Assets.syscode==asset.syscode, Assets.subcode<=asset.subcode, Assets.isdep==True)).all()
             dep_substatus = 0
-            for sub in substatus:
-                #确定计算的起止时点
-
-                dep_enddate = datetime.date(1, 1, 1)
-
-                if sub.termend is None:
-                    dep_enddate = assetslist_app.listdate_al_input.data
-                elif assetslist_app.listdate_al_input.data >= sub.termend:
-                    dep_enddate = sub.termend
-                else:
-                    dep_enddate = assetslist_app.listdate_al_input.data
-
-                #当期折旧计算值
-                depcalc = depmonth(sub.termstart, dep_enddate) * sub.monthdep
-                if (sub.syswithdep + depcalc) >= (sub.originvalue - sub.netsalvage):
-                    asset_dep = sub.originvalue - sub.netsalvage - sub.syswithdep
-                else:
-                    asset_dep = depcalc
+            #计算子状态累计折旧
+            for sub in assets_allsub:
+                asset_dep = 0
+                if sub.syscode==asset.syscode and sub.subcode<=asset.subcode and sub.isdep is True:
+                    #确定计算的起止时点
+                    dep_enddate = datetime.date(1, 1, 1)
+                    if sub.termend is None:
+                        dep_enddate = assetslist_app.listdate_al_input.data
+                    elif assetslist_app.listdate_al_input.data >= sub.termend:
+                        dep_enddate = sub.termend
+                    else:
+                        dep_enddate = assetslist_app.listdate_al_input.data
+                    #当期折旧计算值
+                    depcalc = depmonth(sub.termstart, dep_enddate) * sub.monthdep
+                    #判断提足折旧
+                    if (sub.syswithdep + depcalc) >= (sub.originvalue - sub.netsalvage):
+                        asset_dep = sub.originvalue - sub.netsalvage - sub.syswithdep
+                    else:
+                        asset_dep = depcalc
 
                 dep_substatus = dep_substatus + asset_dep
             assets_ondate_dict[asset] = dep_substatus
