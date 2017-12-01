@@ -282,7 +282,8 @@ def contractview(contractid):
         pdffile = pdfkit.from_string(htmlfile,False)
         response = make_response(pdffile)
         response.headers['Content-Type'] = 'aplication/pdf'
-        response.headers['Content-Disposition'] = 'attachment; filename=contract_'+contractid+'.pdf'
+        response.headers['Content-Disposition'] = 'inline; filename=contract_'+contractid+'.pdf'
+        #只有给出文件的路径，浏览器才能直接打开，否则还是会转到下载。所以要想办法把生成的pdf缓存在某处，等关闭后自动删除。
         return response
     
 

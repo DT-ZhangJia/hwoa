@@ -21,16 +21,21 @@
                     <td> {{ label_dict.all_users_dict[contract.applieruid] }} </td>
                     <td><div style="width:2em">
                             {% if contract.crossuid is none %}<span style="color:red">未审</span>
-                            {% else %}<span style="color:green">已审</span>
+                            {% elif contract.crossopinion==True %}<span style="color:orange">异议</span>
+                            {% elif contract.crossopinion==False %}<span style="color:green">已审</span>
                             {% endif %}
                             </div></td>
                     <td><div style="width:2em">
                             {% if contract.lawyeruid is none %}<span style="color:red">未审</span>
-                            {% else %}<span style="color:green">已审</span>{% endif %}
+                            {% elif contract.lawyeropinion==True %}<span style="color:orange">异议</span>
+                            {% elif contract.lawyeropinion==False %}<span style="color:green">已审</span>
+                            {% endif %}
                             </div></td>
                     <td><div style="width:2em">
                             {% if contract.accuid is none %}<span style="color:red">未审</span>
-                            {% else %}<span style="color:green">已审</span>{% endif %}
+                            {% elif contract.accopinion==True %}<span style="color:orange">异议</span>
+                            {% elif contract.accopinion==False %}<span style="color:green">已审</span>
+                            {% endif %}
                             </div></td>
                     <td><div style="width:2em">
                             {% if contract.approveruid is none %}<span style="color:red; font-weight:bold">未审</span>

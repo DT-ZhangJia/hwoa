@@ -11,7 +11,8 @@ from .. import mydb
 from .forms import LabelDict, DepreciationCalc, Assetslist
 from . import work
 from ..models import User, Departments, Assets
-
+import csv
+from io import StringIO
 
 
 def depmonth(start_date, end_date):
@@ -116,7 +117,7 @@ def assetslist():
             #计算子状态累计折旧
             for sub in assets_allsub:
                 asset_dep = 0
-                if sub.syscode==asset.syscode and sub.subcode<=asset.subcode and sub.isdep is True:
+                if sub.syscode == asset.syscode and sub.subcode <= asset.subcode and sub.isdep is True:
                     #确定计算的起止时点
                     dep_enddate = datetime.date(1, 1, 1)
                     if sub.termend is None:
@@ -136,8 +137,22 @@ def assetslist():
                 dep_substatus = dep_substatus + asset_dep
             assets_ondate_dict[asset] = dep_substatus
 
+        """
+        #输出一个csv的response
+        output = StringIO()
+        w = csv.writer(output, dialect='excel')
+        output.write(u'\ufeff')
+        w.writerow(['资产编号', '资产名称', '原值', '累计折旧'])
+        for asset, dep in assets_ondate_dict.items():
+            w.writerow([asset.syscode, asset.assetname, asset.originvalue, dep])
+        response = make_response(output.getvalue())
+        response.headers['Content-Disposition'] = "attachment; filename='assets.csv"
+        response.mimetype = 'text/csv'
+        """
+
         return render_template('work/assetslist.html',
                                listdate=assetslist_app.listdate_al_input.data,
                                assets_ondate_dict=assets_ondate_dict)
+
 
     return render_template('work/assetslistform.html', assetslist_dsp=assetslist_app)
