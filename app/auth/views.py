@@ -40,7 +40,7 @@ def logout():
 def register():
     """register new user"""
 
-    """
+    
     flash('目前未开放注册。') #这个flash到main.index上去了
     return redirect(url_for('main.index'))
 
@@ -60,7 +60,7 @@ def register():
         #flash('A confirmation email sent.')
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html', registerform_display=registerform_app)
-    
+    """    
 
 
 @auth.route('/confirm/<token>')

@@ -28,7 +28,7 @@ class LabelDict():
             self.all_dpt_dict[dpt.iddepartments] = dpt.dptname
             self.all_dptincharge_dict[dpt.iddepartments] = dpt.dptincharge
 
-        self.all_company_dict = {1:'辉文',2:'植森',3:'蓓蒂森'} #公司名称字典
+        self.all_company_dict = {1:'辉文',2:'植森',3:'蓓蒂森',4:'嘉植'} #公司名称字典
 
 
 

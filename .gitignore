@@ -1,3 +1,4 @@
 config.py
 .pylintrc
+/app/templates/hcj.html
 __pycache__

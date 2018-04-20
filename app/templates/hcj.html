@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>测试html</title>
+<script src="https://unpkg.com/vue"></script>
 </head>
 <body>
     <h1>学习html+css+javascript</h1>
@@ -9,4 +10,14 @@
         <li>css</li>
         <li>javascript</li>
     </ul>
+<div id="app" v-text="message">
+</div>
+<script>
+var app = new Vue({
+  el: '#app',
+  data: {
+    message: 'Hello Vue!'
+  }
+})
+</script>
 </body>
