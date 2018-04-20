@@ -18,8 +18,10 @@ from sqlalchemy import and_, or_
 @work.route('/addpermission', methods=['GET', 'POST'])
 @login_required
 def addpermission():
+    
     """add new permission"""
-
+    
+    """关停授权功能
     #刷新失效授权，效期末小于今天
     pytz.country_timezones('cn')
     tz = pytz.timezone('Asia/Shanghai')
@@ -111,27 +113,26 @@ def addpermission():
     addnewpower = False #创建权限的开关
     if addpermissionform_app.validate_on_submit():
         
-        """
+
         #矫正时区（暂时屏蔽）
-        pytz.country_timezones('cn')
-        tz = pytz.timezone('Asia/Shanghai')
-        """
+        #pytz.country_timezones('cn')
+        #tz = pytz.timezone('Asia/Shanghai')
 
         #判断当前用户的权限，长期董事长可以创建长临时；长期部门长可以创建临时
-        """
-        第一种模式符合ALL：
-        1.授予职能=董事长
-        2.授权期限=临时
-        3.本人在权限表有权限且
-        1）本人所属公司=授权范围公司
-        2）本人权限为长期
-        3）本人权限为董事长
-        4）本人权限在效期内
-        5）本人权限已审批且有效
-        6）不能给自己授予临时董事长
 
-        临时董事长可以有无数个，且不会相互迭代。
-        """
+        #第一种模式符合ALL：
+        #1.授予职能=董事长
+        #2.授权期限=临时
+        #3.本人在权限表有权限且
+        #1）本人所属公司=授权范围公司
+        #2）本人权限为长期
+        #3）本人权限为董事长
+        #4）本人权限在效期内
+        #5）本人权限已审批且有效
+        #6）不能给自己授予临时董事长
+
+        #临时董事长可以有无数个，且不会相互迭代。
+
         if (addpermissionform_app.position_addpm_input.data=="2" and
             addpermissionform_app.term_addpm_input.data=="2" and
             Permissions.query.filter(and_(Permissions.companyid==int(addpermissionform_app.company_addpm_input.data), 
@@ -139,39 +140,39 @@ def addpermission():
             int(addpermissionform_app.user_addpm_input.data)!=current_user.uid):
             addnewpower = True #打开开关
 
-        """
-        第二种模式符合ALL：
-        1.授予职能=部门长【且如果授予另一个人的授予时间与已有的长期部门长无交集】
-        2.授权期限=长期
-        3.本人在权限表有权限且
-        1）本人所属公司=授权范围公司
-        2）本人权限为长期
-        3）本人权限为董事长
-        4）本人权限在效期内
-        5）本人权限已审批且有效
 
-        长期部门长只能有一个，新增一个则前一个失效。
-        """
+        #第二种模式符合ALL：
+        #1.授予职能=部门长【且如果授予另一个人的授予时间与已有的长期部门长无交集】
+        #2.授权期限=长期
+        #3.本人在权限表有权限且
+        #1）本人所属公司=授权范围公司
+        #2）本人权限为长期
+        #3）本人权限为董事长
+        #4）本人权限在效期内
+        #5）本人权限已审批且有效
+
+        #长期部门长只能有一个，新增一个则前一个失效。
+
         if (int(addpermissionform_app.position_addpm_input.data)>=4 and
             addpermissionform_app.term_addpm_input.data=="1" and
             Permissions.query.filter(and_(Permissions.companyid==int(addpermissionform_app.company_addpm_input.data), 
             Permissions.term==1, Permissions.positionid==2, Permissions.termend>datetime.now(tz), Permissions.puid==current_user.uid, Permissions.approved==1, Permissions.valid==1)).all()):
             addnewpower = True #打开开关
 
-        """
-        第三种模式符合ALL：
-        1.授予职能=部门长
-        2.授权期限=临时
-        3.本人在权限表有权限且
-        1）本人所属公司=授权范围公司
-        2）本人权限为长期
-        3）本人权限为部门长
-        4）本人权限在效期内
-        5）本人权限已审批且有效
-        6）不能给自己授予临时部门长
 
-        临时部门长只能有一个，新增一个则停用前一个。
-        """
+        #第三种模式符合ALL：
+        #1.授予职能=部门长
+        #2.授权期限=临时
+        #3.本人在权限表有权限且
+        #1）本人所属公司=授权范围公司
+        #2）本人权限为长期
+        #3）本人权限为部门长
+        #4）本人权限在效期内
+        #5）本人权限已审批且有效
+        #6）不能给自己授予临时部门长
+
+        #临时部门长只能有一个，新增一个则停用前一个。
+
         if (int(addpermissionform_app.position_addpm_input.data)>=4 and
             addpermissionform_app.term_addpm_input.data=="2" and
             Permissions.query.filter(and_(Permissions.companyid==int(addpermissionform_app.company_addpm_input.data), 
@@ -182,9 +183,8 @@ def addpermission():
         #有效数据写入数据库
         if addnewpower == True:
             
-            """
-            判断所有权限金额超限
-            """
+
+            #判断所有权限金额超限
             permit = Permissions.query.filter(and_(Permissions.companyid==int(addpermissionform_app.company_addpm_input.data), Permissions.term==1, Permissions.termend>datetime.now(tz), Permissions.puid==current_user.uid), Permissions.approved==1).first()
 
             if float(addpermissionform_app.apprv100001_addpm_input.data) > permit.apprv100001:
@@ -337,9 +337,9 @@ def addpermission():
                     if old.termstart > datetime.combine(old.termend, datetime.min.time()):#防止出现时间倒挂
                         old.termstart = old.termend
                     mydb.session.add(old)
-
+            #需要立刻提交数据库以获得id
             mydb.session.add(newpermission)# pylint: disable=no-member
-            mydb.session.commit()# pylint: disable=no-member 需要立刻提交数据库以获得id
+            mydb.session.commit()# pylint: disable=no-member 
             flash('授权书已生成。')
             return redirect(url_for('work.permissionlist'))
 
@@ -347,7 +347,9 @@ def addpermission():
             flash('您无法进行此项授权。')
 
     return render_template('work/addpermission.html', addpermissionform_display=addpermissionform_app, selectoption_dict=selectoption_dict, addnewpower=addnewpower,apprv100001_data=apprv100001_data)
-
+    """
+    flash('授权功能暂时关闭。')
+    return render_template('index.html')
 
 @work.route('/permissionlist')
 @login_required
